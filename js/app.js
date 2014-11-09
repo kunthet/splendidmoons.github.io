@@ -94,10 +94,98 @@ $(function(){
     return out;
   }
 
+  // TODO: this is only a dummy with one month for now.
+  function renderCalendarYear(year) {
+    var yearStart = new Date(year, 1, 1);
+    var yearEnd = new Date(year+1, 0, 0);
+
+    var out = '';
+
+    var d = new Date(year, 1, 1);
+    var janEnd = new Date(year, 2, 0);
+    var m = 0;
+
+    out += '<table><thead>';
+    out += '<tr>';
+    // month name column
+    out += '<th></th>';
+    while (d < janEnd) {
+      // TODO: this is only necessary b/c weekdayNamesShort start with
+      // Monday, but JS week starts on Sunday. Change weekdayNamesShort
+      // and align where used later.
+      m = (d.getDay() === 0) ? 6 : d.getDay()-1;
+      out += '<th>' + weekdayNamesShort[m] + '</th>';
+      d.setDate(d.getDate()+1);
+    }
+    out += '</tr></thead>';
+
+    d = new Date(year, 1, 1);
+
+    out += '<tbody><tr>';
+    out += '<td>'+monthNames[0]+'</td>';
+    while (d < janEnd) {
+      // TODO: this is only necessary b/c weekdayNamesShort start with
+      // Monday, but JS week starts on Sunday. Change weekdayNamesShort
+      // and align where used later.
+      m = (d.getDay() === 0) ? 6 : d.getDay()-1;
+      out += '<td>' + dateText(d) + '</td>';
+      d.setDate(d.getDate()+1);
+    }
+
+    out += '</tr></tbody>';
+
+    return out;
+  }
+
   // == Models ==
   // ...
   // === Collections ===
   // ...
+
+  // === Views ===
+
+  var CalendarMonthView = Backbone.View.extend({
+    el: $('#calendar'),
+
+    initialize: function() {
+      this.calendar_nav = $('#calendar_nav');
+    },
+
+    render: function(year, month) {
+      if (typeof year !== 'number') { var year = new Number(year); }
+      if (typeof month !== 'number') { var month = new Number(month); }
+      // TODO: no no no
+      this.month = month;
+      this.year = year;
+      month--;
+      var yearBE = year + 543;
+      // TODO: no no no
+      this.calendar_nav.html('<ul><li>'+year+' / '+yearBE+'</li><li>'+monthNames[month]+'</li></ul>');
+      this.$el.html(renderCalendarMonth(year, month));
+      return this;
+    },
+
+  });
+
+  var CalendarYearView = Backbone.View.extend({
+    el: $('#calendar'),
+
+    initialize: function() {
+      this.calendar_nav = $('#calendar_nav');
+    },
+
+    render: function(year) {
+      if (typeof year !== 'number') { var year = new Number(year); }
+      // TODO: no no no
+      this.year = year;
+      var yearBE = year + 543;
+      // TODO: no no no
+      this.calendar_nav.html('<ul><li>'+year+' / '+yearBE+'</li></ul>');
+      this.$el.html(renderCalendarYear(year));
+      return this;
+    },
+
+  });
 
   // === The App ==
 
@@ -105,33 +193,24 @@ $(function(){
     el: $("#thai_moons_app"),
 
     initialize: function() {
-      this.calendar = $('#calendar');
       this.calendar_nav = $('#calendar_nav');
 
-      // Do this with the calendar nav elements in the DOM for
+      // TODO: Do this with the calendar nav elements in the DOM for
       // auto-update and easy retrieve
       var today = new Date();
       this.year = today.getFullYear();
       this.month = today.getMonth();
     },
 
-    render: function(year, month) {
-      if (typeof year !== 'number') { var year = new Number(year); }
-      if (typeof month !== 'number') { var month = new Number(month); }
-      this.month = month;
-      this.year = year;
-      month--;
-      var yearBE = year + 543;
-      this.calendar_nav.html('<ul><li>'+year+' / '+yearBE+'</li><li>'+monthNames[month]+'</li></ul>');
-      this.calendar.html(renderCalendarMonth(year, month));
-      return this;
-    },
+    //render: function() {},
 
   });
 
   // Kick off!
 
   var App = new AppView;
+  var CalendarMonth = new CalendarMonthView;
+  var CalendarYear = new CalendarYearView;
 
   // === Routes ===
 
@@ -141,7 +220,8 @@ $(function(){
       //"help":                 "help",    // #help
       //"search/:query":        "search",  // #search/kiwis
       "": "index",
-      "calendar/:year/:month":  "calendar",
+      "calendar/:year/:month":  "calendarMonth",
+      "calendar/:year":  "calendarYear",
     },
 
     help: function() {
@@ -155,9 +235,13 @@ $(function(){
       Router.navigate('calendar/'+year+'/'+month, { trigger: true });
     },
 
-    calendar: function(year, month) {
-      App.render(year,month);
-    }
+    calendarMonth: function(year, month) {
+      CalendarMonth.render(year, month);
+    },
+
+    calendarYear: function(year) {
+      CalendarYear.render(year);
+    },
 
   });
 
