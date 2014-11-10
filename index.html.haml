@@ -6,24 +6,21 @@
     <link href="/css/ie.css" media="screen, projection" rel="stylesheet" type="text/css" />
 %body
   #thai_moons_app
+    %nav
+      %a.menu-trigger
+        %span
+    %nav#calendar_nav
     %main
-      %nav
-        .escape
-          #sidebar
-            .closebar
-              %a
-            %ul
-              %li item
-              %li item
-        %a.sidebar-trigger
-          %img{:alt => "Menu", :src => "/images/menu.png"}/
-      %nav#calendar_nav
-      %section#calendar
-      %section#messages
+      .page{ style: "display: none;" }
+        %h2 Hello
+      .calendar
+    %section#messages
 
   %script{:src => "/js/vendor/json2.js"}
   %script{:src => "/js/vendor/jquery-2.1.1.min.js"}
   %script{:src => "/js/vendor/underscore-1.7.0.min.js"}
   %script{:src => "/js/vendor/backbone-1.1.2.min.js"}
-  %script{:src => '/js/moons/moons-thai-2014.js' }
+  %script{:src => '/js/moons/moons-mahanikaya-2013.js' }
+  %script{:src => '/js/moons/moons-mahanikaya-2014.js' }
+  %script{:src => '/js/moons/moons-mahanikaya-2015.js' }
   %script{:src => '/js/app.js' }

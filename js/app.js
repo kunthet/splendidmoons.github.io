@@ -11,7 +11,7 @@ $(function(){
   // Helper functions
 
   function dateText(date) {
-    var m = _.find(MOONS['thai'][date.getFullYear()], function(d){ return d[0] === date.toISOString().substr(0, 10); });
+    var m = _.find(MOONS['mahanikaya'][date.getFullYear()], function(d){ return d[0] === date.toISOString().substr(0, 10); });
     if (typeof m === 'undefined') {
       return date.getDate();
     } else {
@@ -145,7 +145,7 @@ $(function(){
   // === Views ===
 
   var CalendarMonthView = Backbone.View.extend({
-    el: $('#calendar'),
+    el: $('#thai_moons_app > main > .calendar'),
 
     initialize: function() {
       this.calendar_nav = $('#calendar_nav');
@@ -168,7 +168,7 @@ $(function(){
   });
 
   var CalendarYearView = Backbone.View.extend({
-    el: $('#calendar'),
+    el: $('#thai_moons_app > main > .calendar'),
 
     initialize: function() {
       this.calendar_nav = $('#calendar_nav');
@@ -249,13 +249,9 @@ $(function(){
   Backbone.history.start();
 
   $('a.sidebar-trigger').click(function(){
-    $('#sidebar').fadeIn();
+    $(this).toggleClass('active');
+    $('#thai_moons_app > main > .page').fadeToggle();
   });
-
-  $('.closebar').click(function(){
-    $(this).parent().fadeOut();
-  });
-
 
   function keyNav(e) {
     switch (e.keyCode) {

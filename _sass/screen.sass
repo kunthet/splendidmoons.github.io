@@ -4,40 +4,26 @@
 @import 'neat/neat'
 @import 'base/base'
 
-@import 'compass/css3/border-radius'
-
 nav,
-section
+main,
+section,
   +outer-container
 
-.escape
-  position: absolute
-
-.sidebar-trigger
-  img
+.menu-trigger
+  span
+    display: inline-block
     border: 1px solid #5B5E63
     +border-radius(20px)
     padding: 10px
     height: 40px
     width: 40px
-
-#sidebar
-  display: none
-  position: relative
-  width: 200px
-  height: 100%
-  //overflow-y: scroll
-  z-index: 9999
-  background: #5B5E63
-  color: #fff
-
-.closebar
-  text-align: right
-  a
-    display: inline-block
-    width: 10px
-    height: 10px
-    +border-radius(5px)
-    background: red
+    background-image: url('/images/menu.png')
+    background-repeat: no-repeat
+    background-position: 50% 50%
+  &.active
+    span
+      background-image: url('/images/menu-inverse.png')
+      background-color: #5B5E63
+      border: 1px solid #a4a19c
 
 

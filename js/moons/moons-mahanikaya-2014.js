@@ -1,8 +1,8 @@
 
 var MOONS = MOONS || [];
-MOONS['thai'] = MOONS['thai'] || [];
+MOONS['mahanikaya'] = MOONS['mahanikaya'] || [];
 
-MOONS['thai'][2014] = [
+MOONS['mahanikaya'][2014] = [
   [ '2014-01-08', 'waxing' ],
   [ '2014-01-15', 'full'   ],
   [ '2014-01-23', 'waning' ],
