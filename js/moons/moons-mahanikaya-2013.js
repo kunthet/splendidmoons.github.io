@@ -3,7 +3,6 @@ var MOONS = MOONS || [];
 MOONS['mahanikaya'] = MOONS['mahanikaya'] || [];
 
 MOONS['mahanikaya'][2013] = [
-  // TODO: is this wrong in the calendar?
   [ '2013-01-05', 'waning' ],
   [ '2013-01-11', 'new'    ],
   [ '2013-01-19', 'waxing' ],

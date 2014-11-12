@@ -7,12 +7,14 @@
 %body
   #thai_moons_app
     %nav
+      %a.logo
+        %span
       %a.menu-trigger
         %span
-    %nav#calendar_nav
     %main
       .page{ style: "display: none;" }
         %h2 Hello
+      .calendar_nav
       .calendar
     %section#messages
 
@@ -21,6 +23,7 @@
   %script{:src => "/js/vendor/underscore-1.7.0.min.js"}
   %script{:src => "/js/vendor/backbone-1.1.2.min.js"}
   %script{:src => '/js/moons/moons-mahanikaya-2013.js' }
+  %script{:src => '/js/moons/moons-dhammayut-2013.js' }
   %script{:src => '/js/moons/moons-mahanikaya-2014.js' }
   %script{:src => '/js/moons/moons-mahanikaya-2015.js' }
   %script{:src => '/js/app.js' }

@@ -148,7 +148,7 @@ $(function(){
     el: $('#thai_moons_app > main > .calendar'),
 
     initialize: function() {
-      this.calendar_nav = $('#calendar_nav');
+      this.calendar_nav = $('#thai_moons_app > main > .calendar_nav');
     },
 
     render: function(year, month) {
@@ -171,7 +171,7 @@ $(function(){
     el: $('#thai_moons_app > main > .calendar'),
 
     initialize: function() {
-      this.calendar_nav = $('#calendar_nav');
+      this.calendar_nav = $('#thai_moons_app > main > .calendar_nav');
     },
 
     render: function(year) {
@@ -193,7 +193,7 @@ $(function(){
     el: $("#thai_moons_app"),
 
     initialize: function() {
-      this.calendar_nav = $('#calendar_nav');
+      this.calendar_nav = $('#thai_moons_app > main > .calendar_nav');
 
       // TODO: Do this with the calendar nav elements in the DOM for
       // auto-update and easy retrieve
@@ -248,7 +248,7 @@ $(function(){
   var Router = new AppRouter;
   Backbone.history.start();
 
-  $('a.sidebar-trigger').click(function(){
+  $('a.menu-trigger').click(function(){
     $(this).toggleClass('active');
     $('#thai_moons_app > main > .page').fadeToggle();
   });
@@ -258,6 +258,8 @@ $(function(){
 
       // left
       case 37:
+      // k
+      case 75:
         var month = --App.month;
         var year = App.year;
         if (month < 1) { year--; month = 12; }
@@ -266,6 +268,8 @@ $(function(){
 
       // right
       case 39:
+      // j
+      case 74:
         var month = ++App.month;
         var year = App.year;
         if (month > 12) { year++; month = 1; }
