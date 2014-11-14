@@ -2,6 +2,17 @@
 var MOONS = MOONS || [];
 MOONS['mahanikaya'] = MOONS['mahanikaya'] || [];
 
+var NOTES = NOTES || [];
+NOTES['mahanikaya'] = NOTES['mahanikaya'] || [];
+
+NOTES['mahanikaya'][2014] = [
+  [ '2014-02-14', 'Māgha Pūjā'   ],
+  [ '2014-05-13', 'Vesākha Pūjā' ],
+  [ '2014-07-11', 'Āsāḷhā Pūjā'  ],
+  [ '2014-07-12', 'Vassa begins' ],
+  [ '2014-10-08', 'Pavāraṇā'     ],
+];
+
 MOONS['mahanikaya'][2014] = [
   [ '2014-01-08', 'waxing' ],
   [ '2014-01-15', 'full'   ],

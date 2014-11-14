@@ -11,12 +11,35 @@ $(function(){
   // Helper functions
 
   function dateText(date) {
-    var m = _.find(MOONS['mahanikaya'][date.getFullYear()], function(d){ return d[0] === date.toISOString().substr(0, 10); });
+    var out = '';
+    var isodate = date.toISOString().substr(0, 10);
+
+    var m = _.find(MOONS['mahanikaya'][date.getFullYear()], function(d){ return d[0] === isodate; });
     if (typeof m === 'undefined') {
-      return date.getDate();
+      out += '<div class="datetext">'+date.getDate()+'</div>';
     } else {
-      return m[1];
+      out += '<div class="datetext '+m[1]+'">&nbsp;</div>';
     }
+
+    var a = _.find(MOONS['astro'][date.getFullYear()], function(d){ return d[0] === isodate; });
+    if (typeof a !== 'undefined') {
+      out += '<div class="astro '+a[1]+'">&nbsp;</div>';
+    }
+
+    var n = _.find(NOTES['mahanikaya'][date.getFullYear()], function(d){ return d[0] === isodate; });
+    if (typeof n !== 'undefined') {
+      out += '<div class="notes">'+n[1]+'</div>';
+    }
+
+    if (typeof m !== 'undefined') {
+      if (m[1] === 'full') {
+        out += '<div class="season">15th Hemanta n/m</div>';
+      } else if (m[1] === 'new') {
+        // TODO
+      }
+    }
+
+    return out;
   }
 
   function renderCalendarMonth(year, month) {
@@ -145,10 +168,10 @@ $(function(){
   // === Views ===
 
   var CalendarMonthView = Backbone.View.extend({
-    el: $('#thai_moons_app > main > .calendar'),
+    el: $('#calendar'),
 
     initialize: function() {
-      this.calendar_nav = $('#thai_moons_app > main > .calendar_nav');
+      this.calendar_nav = $('#calendar_nav');
     },
 
     render: function(year, month) {
@@ -168,10 +191,10 @@ $(function(){
   });
 
   var CalendarYearView = Backbone.View.extend({
-    el: $('#thai_moons_app > main > .calendar'),
+    el: $('#calendar'),
 
     initialize: function() {
-      this.calendar_nav = $('#thai_moons_app > main > .calendar_nav');
+      this.calendar_nav = $('#calendar_nav');
     },
 
     render: function(year) {
@@ -193,7 +216,7 @@ $(function(){
     el: $("#thai_moons_app"),
 
     initialize: function() {
-      this.calendar_nav = $('#thai_moons_app > main > .calendar_nav');
+      this.calendar_nav = $('#calendar_nav');
 
       // TODO: Do this with the calendar nav elements in the DOM for
       // auto-update and easy retrieve
@@ -248,9 +271,9 @@ $(function(){
   var Router = new AppRouter;
   Backbone.history.start();
 
-  $('a.menu-trigger').click(function(){
+  $('li.menu').click(function(){
     $(this).toggleClass('active');
-    $('#thai_moons_app > main > .page').fadeToggle();
+    $('#pages').fadeToggle();
   });
 
   function keyNav(e) {

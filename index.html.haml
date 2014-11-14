@@ -1,29 +1,46 @@
 !!!
-%head
-  %link{:href => "/css/screen.css", :media => "screen, projection", :rel => "stylesheet", :type => "text/css"}/
-  %link{:href => "/css/print.css", :media => "print", :rel => "stylesheet", :type => "text/css"}/
-  /[if IE]
-    <link href="/css/ie.css" media="screen, projection" rel="stylesheet" type="text/css" />
-%body
-  #thai_moons_app
-    %nav
-      %a.logo
-        %span
-      %a.menu-trigger
-        %span
-    %main
-      .page{ style: "display: none;" }
-        %h2 Hello
-      .calendar_nav
-      .calendar
-    %section#messages
+%html{:lang => "en", "xml:lang" => "en", :xmlns => "http://www.w3.org/1999/xhtml"}
+  %head
+    %meta{:charset => "utf-8"}/
+    //%meta{:content => "width=device-width, initial-scale=1.0", :name => "viewport"}/
+    //%meta{:content => "text/html; charset=utf-8", "http-equiv" => "Content-Type"}/
+    %title Thai Moons
+    %link{:href => "/css/screen.css", :media => "screen, projection", :rel => "stylesheet", :type => "text/css"}/
+    %link{:href => "/css/print.css", :media => "print", :rel => "stylesheet", :type => "text/css"}/
+    /[if IE]
+      <link href="/css/ie.css" media="screen, projection" rel="stylesheet" type="text/css" />
 
-  %script{:src => "/js/vendor/json2.js"}
-  %script{:src => "/js/vendor/jquery-2.1.1.min.js"}
-  %script{:src => "/js/vendor/underscore-1.7.0.min.js"}
-  %script{:src => "/js/vendor/backbone-1.1.2.min.js"}
-  %script{:src => '/js/moons/moons-mahanikaya-2013.js' }
-  %script{:src => '/js/moons/moons-dhammayut-2013.js' }
-  %script{:src => '/js/moons/moons-mahanikaya-2014.js' }
-  %script{:src => '/js/moons/moons-mahanikaya-2015.js' }
-  %script{:src => '/js/app.js' }
+  %body
+    #thai_moons_app
+      %nav
+        %ul.pull-left
+          %li.logo &nbsp;
+          %li.site-title
+            %p.site-title Thai Moons
+            %p.site-subtitle uposatha moonday calendar
+        %ul.pull-right
+          %li.menu &nbsp;
+          %li.language &nbsp;
+      %section#pages
+        .page
+          %h2 Hello
+      %section#calendar_nav
+      %section#calendar_wrap
+        .prev
+          %span &lt;
+        #calendar
+        .next
+          %span &gt;
+      %section#messages
+
+    %script{:src => '/js/vendor/json2.js' }
+    %script{:src => '/js/vendor/jquery-2.1.1.min.js' }
+    %script{:src => '/js/vendor/underscore-1.7.0.min.js' }
+    %script{:src => '/js/vendor/backbone-1.1.2.min.js' }
+    %script{:src => '/js/moons/moons-mahanikaya-2013.js' }
+    %script{:src => '/js/moons/moons-dhammayut-2013.js' }
+    %script{:src => '/js/moons/moons-astro-2014.js' }
+    %script{:src => '/js/moons/moons-mahanikaya-2014.js' }
+    %script{:src => '/js/moons/moons-dhammayut-2014.js' }
+    %script{:src => '/js/moons/moons-mahanikaya-2015.js' }
+    %script{:src => '/js/app.js' }
