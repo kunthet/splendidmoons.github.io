@@ -2,6 +2,18 @@
 var MOONS = MOONS || [];
 MOONS['mahanikaya'] = MOONS['mahanikaya'] || [];
 
+var NOTES = NOTES || [];
+NOTES['mahanikaya'] = NOTES['mahanikaya'] || [];
+
+NOTES['mahanikaya'][2015] = [
+  [ '2015-03-04', 'Māgha Pūjā'   ],
+  [ '2015-06-01', 'Vesākha Pūjā' ],
+  [ '2015-07-01', 'adhikam&#257;sa (extra month)' ],
+  [ '2015-07-30', '&#256;&#115;&#257;&#7735;&#104;&#257;&#32;&#80;&#363;&#106;&#257;'  ],// Āsāḷhā Pūjā
+  [ '2015-07-31', 'Vassa begins' ],
+  [ '2015-10-27', 'Pavāraṇā'     ],
+];
+
 MOONS['mahanikaya'][2015] = [
   [ '2015-01-04', 'full'   ],
   [ '2015-01-12', 'waning' ],
