@@ -3,6 +3,15 @@
 
 $(function(){
 
+  // First make sure we have the basic app html loaded
+
+  $.ajax({
+    url: "views/appview.html",
+    success: function(res) {
+      $("#thaimoons").html(res);
+    },
+  }).done(function(){
+
   // Some useful data
 
   var monthNames = [ 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December' ];
@@ -213,7 +222,7 @@ $(function(){
   // === The App ==
 
   var AppView = Backbone.View.extend({
-    el: $("#thai_moons_app"),
+    el: $("#thaimoons"),
 
     initialize: function() {
       this.calendar_nav = $('#calendar_nav');
@@ -223,10 +232,10 @@ $(function(){
       var today = new Date();
       this.year = today.getFullYear();
       this.month = today.getMonth();
+      this.render();
     },
 
-    //render: function() {},
-
+    render: function() {},
   });
 
   // Kick off!
@@ -238,7 +247,6 @@ $(function(){
   // === Routes ===
 
   var AppRouter = Backbone.Router.extend({
-
     routes: {
       //"help":                 "help",    // #help
       //"search/:query":        "search",  // #search/kiwis
@@ -265,7 +273,6 @@ $(function(){
     calendarYear: function(year) {
       CalendarYear.render(year);
     },
-
   });
 
   var Router = new AppRouter;
@@ -307,5 +314,6 @@ $(function(){
 
   $('body').keydown(function(e){ keyNav(e); });
 
+  });
 });
 

@@ -27,4 +27,5 @@ guard :compass
 
 guard :haml, notifications: false do
   watch(/^.+(\.html\.haml)$/)
+  watch(/^views\/.+(\.html\.haml)$/)
 end
