@@ -3,12 +3,14 @@
 @import 'base/grid-settings'
 @import 'neat/neat'
 @import 'base/base'
-
 @import 'compass/css3/border-radius'
 
-nav,
-main,
-section,
+$fa-font-path: "../fonts"
+@import 'font-awesome/font-awesome'
+
+//@import 'refills/dropdown'
+
+nav, main, section
   +outer-container
 
 .pull-left
@@ -19,7 +21,7 @@ section,
 
 #thaimoons > nav > ul > li
   display: inline-block
-  border: 1px solid #5B5E63
+  border: 1px solid $dark-blue
   +border-radius(20px)
   padding: 10px
   height: 40px
@@ -27,8 +29,8 @@ section,
   background-repeat: no-repeat
   background-position: 50% 50%
   &.active
-    background-color: #5B5E63
-    border: 1px solid #a4a19c
+    background-color: $dark-blue
+    border: 1px solid $dark-blue-inverse
 
 #thaimoons > nav > ul > li
   float: left
@@ -39,7 +41,7 @@ section,
   &:last-child
     margin-right: 0
   &.logo
-    background-image: url('/images/logo-w80.png')
+    background-image: url('/images/logo_w80.png')
     background-size: 40px
     border: none
     +border-radius(none)
@@ -74,8 +76,15 @@ p.site-subtitle
   font-style: italic
   text-indent: 1em
 
-#calendar_nav
+#calendar_period
   text-align: center
+
+#calendar_menu
+  & > ul.settings
+    text-align: right
+    float: right
+    & > li
+      float: right
 
 #calendar_wrap
   .prev, .next, #calendar
@@ -140,3 +149,12 @@ div.notes
 div.season
   font-size: 0.8em
 
+select, label
+  @extend %button
+
+button, select, label
+  &.quiet
+    background-color: white
+    color: $base-font-color
+    font-weight: normal
+    padding: 0.75em 1em

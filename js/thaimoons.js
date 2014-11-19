@@ -1,3 +1,4 @@
+// vim: foldmethod=indent foldlevel=1
 
 // hey
 
@@ -180,7 +181,7 @@ $(function(){
     el: $('#calendar'),
 
     initialize: function() {
-      this.calendar_nav = $('#calendar_nav');
+      this.calendar_period = $('#calendar_period');
     },
 
     render: function(year, month) {
@@ -192,7 +193,7 @@ $(function(){
       month--;
       var yearBE = year + 543;
       // TODO: no no no
-      this.calendar_nav.html('<ul><li>'+year+' / '+yearBE+'</li><li>'+monthNames[month]+'</li></ul>');
+      this.calendar_period.html('<ul><li>'+year+' / '+yearBE+'</li><li>'+monthNames[month]+'</li></ul>');
       this.$el.html(renderCalendarMonth(year, month));
       return this;
     },
@@ -203,7 +204,7 @@ $(function(){
     el: $('#calendar'),
 
     initialize: function() {
-      this.calendar_nav = $('#calendar_nav');
+      this.calendar_period = $('#calendar_period');
     },
 
     render: function(year) {
@@ -212,7 +213,7 @@ $(function(){
       this.year = year;
       var yearBE = year + 543;
       // TODO: no no no
-      this.calendar_nav.html('<ul><li>'+year+' / '+yearBE+'</li></ul>');
+      this.calendar_period.html('<ul><li>'+year+' / '+yearBE+'</li></ul>');
       this.$el.html(renderCalendarYear(year));
       return this;
     },
@@ -225,7 +226,7 @@ $(function(){
     el: $("#thaimoons"),
 
     initialize: function() {
-      this.calendar_nav = $('#calendar_nav');
+      this.calendar_period = $('#calendar_period');
 
       // TODO: Do this with the calendar nav elements in the DOM for
       // auto-update and easy retrieve
