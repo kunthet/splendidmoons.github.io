@@ -48,6 +48,13 @@ input[type="submit"]:disabled, select:disabled, label:disabled {
   opacity: 0.5;
 }
 
+/* line 14, ../_sass/base/extends/_flashes.scss */
+.flash-alert, .flash-error, .flash-notice, .flash-success {
+  font-weight: bold;
+  margin-bottom: 0.75em;
+  padding: 0.75em;
+}
+
 /* line 1, ../_sass/base/_typography.scss */
 body {
   -webkit-font-smoothing: antialiased;
@@ -3005,7 +3012,75 @@ input[type="submit"] {
   content: "";
 }
 
-/* line 13, ../_sass/screen.sass */
+/* line 5, ../_sass/refills/_flashes.scss */
+.flash-alert, .flash-error, .flash-notice, .flash-success {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 0.75em;
+  padding: 0.75em;
+}
+
+/* line 15, ../_sass/refills/_flashes.scss */
+.flash-alert {
+  background: #FFF6BF;
+  color: #8c7800;
+}
+/* line 20, ../_sass/refills/_flashes.scss */
+.flash-alert a {
+  color: #594c00;
+  border-bottom: 1px solid rgba(89, 76, 0, 0.3);
+}
+/* line 24, ../_sass/refills/_flashes.scss */
+.flash-alert a:hover {
+  color: black;
+}
+
+/* line 15, ../_sass/refills/_flashes.scss */
+.flash-error {
+  background: #FBE3E4;
+  color: #96151b;
+}
+/* line 20, ../_sass/refills/_flashes.scss */
+.flash-error a {
+  color: #6a0f13;
+  border-bottom: 1px solid rgba(106, 15, 19, 0.3);
+}
+/* line 24, ../_sass/refills/_flashes.scss */
+.flash-error a:hover {
+  color: #110203;
+}
+
+/* line 15, ../_sass/refills/_flashes.scss */
+.flash-notice {
+  background: #e5edf8;
+  color: #264d85;
+}
+/* line 20, ../_sass/refills/_flashes.scss */
+.flash-notice a {
+  color: #1b365d;
+  border-bottom: 1px solid rgba(27, 54, 93, 0.3);
+}
+/* line 24, ../_sass/refills/_flashes.scss */
+.flash-notice a:hover {
+  color: #04080e;
+}
+
+/* line 15, ../_sass/refills/_flashes.scss */
+.flash-success {
+  background: #E6EFC2;
+  color: #56651a;
+}
+/* line 20, ../_sass/refills/_flashes.scss */
+.flash-success a {
+  color: #333c10;
+  border-bottom: 1px solid rgba(51, 60, 16, 0.3);
+}
+/* line 24, ../_sass/refills/_flashes.scss */
+.flash-success a:hover {
+  color: black;
+}
+
+/* line 14, ../_sass/screen.sass */
 nav, main, section {
   max-width: 68em;
   margin-left: auto;
@@ -3018,17 +3093,17 @@ nav:after, main:after, section:after {
   clear: both;
 }
 
-/* line 16, ../_sass/screen.sass */
+/* line 17, ../_sass/screen.sass */
 .pull-left {
   float: left;
 }
 
-/* line 19, ../_sass/screen.sass */
+/* line 20, ../_sass/screen.sass */
 .pull-right {
   float: right;
 }
 
-/* line 22, ../_sass/screen.sass */
+/* line 23, ../_sass/screen.sass */
 #thaimoons > nav > ul > li {
   display: inline-block;
   border: 1px solid #5B5E63;
@@ -3041,27 +3116,27 @@ nav:after, main:after, section:after {
   background-repeat: no-repeat;
   background-position: 50% 50%;
 }
-/* line 31, ../_sass/screen.sass */
+/* line 32, ../_sass/screen.sass */
 #thaimoons > nav > ul > li.active {
   background-color: #5B5E63;
   border: 1px solid #a4a19c;
 }
 
-/* line 35, ../_sass/screen.sass */
+/* line 36, ../_sass/screen.sass */
 #thaimoons > nav > ul > li {
   float: left;
   margin-left: 0.2em;
   margin-right: 0.2em;
 }
-/* line 39, ../_sass/screen.sass */
+/* line 40, ../_sass/screen.sass */
 #thaimoons > nav > ul > li:first-child {
   margin-left: 0;
 }
-/* line 41, ../_sass/screen.sass */
+/* line 42, ../_sass/screen.sass */
 #thaimoons > nav > ul > li:last-child {
   margin-right: 0;
 }
-/* line 43, ../_sass/screen.sass */
+/* line 44, ../_sass/screen.sass */
 #thaimoons > nav > ul > li.logo {
   background-image: url("/images/logo_w80.png");
   background-size: 40px;
@@ -3070,19 +3145,19 @@ nav:after, main:after, section:after {
   -webkit-border-radius: none;
   border-radius: none;
 }
-/* line 48, ../_sass/screen.sass */
+/* line 49, ../_sass/screen.sass */
 #thaimoons > nav > ul > li.menu {
   background-image: url("/images/menu.png");
 }
-/* line 50, ../_sass/screen.sass */
+/* line 51, ../_sass/screen.sass */
 #thaimoons > nav > ul > li.menu.active {
   background-image: url("/images/menu-inverse.png");
 }
-/* line 52, ../_sass/screen.sass */
+/* line 53, ../_sass/screen.sass */
 #thaimoons > nav > ul > li.language {
   background-image: url("/images/flags/gb.png");
 }
-/* line 54, ../_sass/screen.sass */
+/* line 55, ../_sass/screen.sass */
 #thaimoons > nav > ul > li.site-title {
   border: none;
   width: auto;
@@ -3093,20 +3168,20 @@ nav:after, main:after, section:after {
   margin-bottom: 0;
 }
 
-/* line 63, ../_sass/screen.sass */
+/* line 64, ../_sass/screen.sass */
 p.site-title,
 p.site-subtitle {
   padding: 0;
   margin: 0;
 }
 
-/* line 68, ../_sass/screen.sass */
+/* line 69, ../_sass/screen.sass */
 p.site-title {
   font-size: 20px;
   line-height: 22px;
 }
 
-/* line 72, ../_sass/screen.sass */
+/* line 73, ../_sass/screen.sass */
 p.site-subtitle {
   font-size: 15px;
   line-height: 15px;
@@ -3115,31 +3190,31 @@ p.site-subtitle {
   text-indent: 1em;
 }
 
-/* line 79, ../_sass/screen.sass */
+/* line 80, ../_sass/screen.sass */
 #calendar_period {
   text-align: center;
 }
 
-/* line 83, ../_sass/screen.sass */
+/* line 84, ../_sass/screen.sass */
 #calendar_menu > ul.settings {
   text-align: right;
   float: right;
 }
-/* line 86, ../_sass/screen.sass */
+/* line 87, ../_sass/screen.sass */
 #calendar_menu > ul.settings > li {
   float: right;
 }
 
-/* line 90, ../_sass/screen.sass */
+/* line 91, ../_sass/screen.sass */
 #calendar_wrap .prev, #calendar_wrap .next, #calendar_wrap #calendar {
   float: left;
 }
-/* line 92, ../_sass/screen.sass */
+/* line 93, ../_sass/screen.sass */
 #calendar_wrap .prev, #calendar_wrap .next {
   width: 10%;
   margin-top: 105px;
 }
-/* line 95, ../_sass/screen.sass */
+/* line 96, ../_sass/screen.sass */
 #calendar_wrap .prev span, #calendar_wrap .next span {
   display: inline-block;
   width: 20px;
@@ -3148,43 +3223,43 @@ p.site-subtitle {
   font-size: 20px;
   line-height: 20px;
 }
-/* line 102, ../_sass/screen.sass */
+/* line 103, ../_sass/screen.sass */
 #calendar_wrap .prev {
   text-align: left;
 }
-/* line 104, ../_sass/screen.sass */
+/* line 105, ../_sass/screen.sass */
 #calendar_wrap .prev span {
   border-right: 1px solid #999;
 }
-/* line 106, ../_sass/screen.sass */
+/* line 107, ../_sass/screen.sass */
 #calendar_wrap .next {
   text-align: right;
 }
-/* line 108, ../_sass/screen.sass */
+/* line 109, ../_sass/screen.sass */
 #calendar_wrap .next span {
   border-left: 1px solid #999;
 }
-/* line 110, ../_sass/screen.sass */
+/* line 111, ../_sass/screen.sass */
 #calendar_wrap #calendar {
   width: 75%;
 }
-/* line 113, ../_sass/screen.sass */
+/* line 114, ../_sass/screen.sass */
 #calendar_wrap #calendar table th, #calendar_wrap #calendar table td {
   border: none;
   text-align: center;
 }
 
-/* line 117, ../_sass/screen.sass */
+/* line 118, ../_sass/screen.sass */
 #pages {
   display: none;
 }
 
-/* line 120, ../_sass/screen.sass */
+/* line 121, ../_sass/screen.sass */
 div.datetext {
   font-size: 1em;
 }
 
-/* line 123, ../_sass/screen.sass */
+/* line 124, ../_sass/screen.sass */
 div.new,
 div.waxing,
 div.full,
@@ -3195,44 +3270,44 @@ div.waning {
   background-size: 25px;
 }
 
-/* line 132, ../_sass/screen.sass */
+/* line 133, ../_sass/screen.sass */
 div.new {
   background-image: url("/images/moon-new.png");
 }
 
-/* line 134, ../_sass/screen.sass */
+/* line 135, ../_sass/screen.sass */
 div.waxing {
   background-image: url("/images/moon-waxing.png");
 }
 
-/* line 136, ../_sass/screen.sass */
+/* line 137, ../_sass/screen.sass */
 div.full {
   background-image: url("/images/moon-full.png");
 }
 
-/* line 138, ../_sass/screen.sass */
+/* line 139, ../_sass/screen.sass */
 div.waning {
   background-image: url("/images/moon-waning.png");
 }
 
-/* line 141, ../_sass/screen.sass */
+/* line 142, ../_sass/screen.sass */
 div.astro {
   height: 14px;
   background-position: 70% 50%;
   background-size: 10px;
 }
 
-/* line 146, ../_sass/screen.sass */
+/* line 147, ../_sass/screen.sass */
 div.notes {
   font-size: 0.8em;
 }
 
-/* line 149, ../_sass/screen.sass */
+/* line 150, ../_sass/screen.sass */
 div.season {
   font-size: 0.8em;
 }
 
-/* line 156, ../_sass/screen.sass */
+/* line 157, ../_sass/screen.sass */
 button.quiet, select.quiet, label.quiet {
   background-color: white;
   color: #333;
