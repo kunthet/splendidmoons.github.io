@@ -1,5 +1,27 @@
 // vim: foldmethod=indent foldlevel=1
 
+// Some useful data
+
+var monthNames = [ 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December' ];
+var weekdayNamesShort = [ 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun' ];
+
+var today = new Date();
+var year = today.getFullYear();
+var month = today.getMonth();
+month++;
+
+var App = {
+  // TODO: persist this with LocalStore
+  config: {
+    year: year,
+    month: month,
+    yearAsList: false,
+    nikaya: 'mahanikaya',
+  },
+
+  Views: {},
+};
+
 // === Templates ===
 
 var tpl = {
@@ -36,29 +58,46 @@ var tpl = {
 
 // === Views ===
 
-var CalendarNavView = Backbone.View.extend({
+App.Views.CalendarNav = Backbone.View.extend({
   initialize: function() {
-    this.template = _.template(tpl.get('calendarnav'));
+    this.template = _.template(tpl.get('calendarNav'));
   },
-  render: function(year, month) {
-    this.$el.html(this.template({ year: year, month: month }));
+
+  render: function(data) {
+    if (typeof data.month !== 'undefined') {
+      data.monthName = monthNames[data.month-1];
+    }
+    data.yearBE = data.year + 543;
+
+    this.$el.html(this.template(data));
+
     return this;
   },
 });
 
-var CalendarMonthTableView = Backbone.View.extend({
+App.Views.CalendarMonthTable = Backbone.View.extend({
   initialize: function() {
-    this.template = _.template(tpl.get('calendarmonthtable'));
+    this.template = _.template(tpl.get('calendarMonthTable'));
   },
-  render: function(year, month) {
-    this.$el.html(this.template({ year: year, month: month }));
+  render: function(data) {
+    this.$el.html(this.template(data));
+    return this;
+  },
+});
+
+App.Views.CalendarYearAsList = Backbone.View.extend({
+  initialize: function() {
+    this.template = _.template(tpl.get('calendarYearAsList'));
+  },
+  render: function(data) {
+    this.$el.html(this.template(data));
     return this;
   },
 });
 
 // === Router ===
 
-var AppRouter = Backbone.Router.extend({
+App.Router = Backbone.Router.extend({
   routes: {
     "": "index",
     "calendar/:year/:month": "calendarMonth",
@@ -67,87 +106,117 @@ var AppRouter = Backbone.Router.extend({
 
   initialize: function() {
     $('#thaimoons').html(tpl.get('appview'));
-
-    var today = new Date();
-    this.year = today.getFullYear();
-    this.month = today.getMonth();
-    this.month++;
   },
 
+  // Controllers
+
   index: function() {
-    this.navigate('calendar/'+this.year+'/'+this.month, { trigger: true });
+    this.navigate('calendar/'+App.config.year+'/'+App.config.month, { trigger: true });
+  },
+
+  calendarRender: function() {
+    $('#calendar_nav').html(new App.Views.CalendarNav().render(App.config).el);
+    if (App.config.yearAsList) {
+      $('#calendar').html(new App.Views.CalendarYearAsList().render(App.config).el);
+    } else {
+      $('#calendar').html(new App.Views.CalendarMonthTable().render(App.config).el);
+    }
+
+    var that = this;
+    $('input:checkbox[name=year_as_list]').change(function(){ that.yearAsListChanged($(this)); });
+    $('select[name=nikaya]').change(function(){ that.nikayaChanged($(this)); });
   },
 
   calendarMonth: function(year, month) {
-    this.year = year;
-    this.month = month;
-    $('#calendar_nav').html(new CalendarNavView().render(year, month).el);
-    $('#calendar').html(new CalendarMonthTableView().render(year, month).el);
+    App.config.yearAsList = false;
+    if (typeof year !== 'number') { year = new Number(year); }
+    if (typeof month !== 'number') { month = new Number(month); }
+    App.config.year = year;
+    App.config.month = month;
+    this.calendarRender();
   },
 
   calendarYear: function(year) {
+    App.config.yearAsList = true;
+    if (typeof year !== 'number') { year = new Number(year); }
+    App.config.year = year;
+    this.calendarRender();
+  },
+
+  yearAsListChanged: function(obj) {
+    App.config.yearAsList = obj.prop('checked');
+    if (App.config.yearAsList) {
+      this.navigate('calendar/'+App.config.year, { trigger: true });
+    } else {
+      this.navigate('calendar/'+App.config.year+'/'+App.config.month, { trigger: true });
+    }
+  },
+
+  nikayaChanged: function(obj) {
+    App.config.nikaya = obj.children('option:selected').first().val();
+    this.calendarRender();
+  },
+
+  keyNav: function(e) {
+    var year = App.config.year;
+    var month = App.config.month;
+
+    switch (e.keyCode) {
+      // left
+      case 37:
+      // up
+      case 38:
+      // k
+      case 75:
+        month = --month;
+        if (month < 1) { year--; month = 12; }
+        break;
+
+      // right
+      case 39:
+      // down
+      case 40:
+      // j
+      case 74:
+        month = ++month;
+        if (month > 12) { year++; month = 1; }
+        break;
+
+      // PgUp
+      case 33:
+        year--;
+        break;
+
+      // PgDown
+      case 34:
+        year++;
+        break;
+
+      default:
+        console.log(e.keyCode);
+        return;
+    }
+
+    if (App.config.yearAsList) {
+      this.navigate('calendar/'+year, { trigger: true });
+    } else {
+      this.navigate('calendar/'+year+'/'+month, { trigger: true });
+    }
   },
 });
 
 // === It lives! ===
 
-var App = '';
-
 tpl.loadTemplates(function(){
-  App = new AppRouter;
+  App.theRouter = new App.Router;
   Backbone.history.start();
-});
 
-// === Key bindings for navigation ===
+  $('#thaimoons > nav li.menu').click(function(){
+    $(this).toggleClass('active');
+    $('#pages').fadeToggle();
+  });
 
-function keyNav(e) {
-  var year = App.year;
-  var month = App.month;
-
-  switch (e.keyCode) {
-
-    // left
-    case 37:
-    // up
-    case 38:
-    // k
-    case 75:
-      month = --month;
-      if (month < 1) { year--; month = 12; }
-      break;
-
-    // right
-    case 39:
-    // down
-    case 40:
-    // j
-    case 74:
-      month = ++month;
-      if (month > 12) { year++; month = 1; }
-      break;
-
-    // PgUp
-    case 33:
-      var year = --year;
-      break;
-
-    // PgDown
-    case 34:
-      var year = ++year;
-      break;
-
-    default:
-      console.log(e.keyCode);
-      return;
-  }
-  App.navigate('calendar/'+year+'/'+month, { trigger: true });
-}
-
-// === DOM ready ===
-
-$(function() {
-
-  $('body').keydown(function(e){ keyNav(e); });
+  $('body').keydown(function(e){ App.theRouter.keyNav(e); });
 
 });
 

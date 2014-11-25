@@ -22,20 +22,6 @@
           %span.fa.fa-plus-circle
           Add to Google Calendar
   %section#calendar_nav
-    #calendar_period
-    #calendar_menu
-      %ul.settings
-        %li
-          %select#nikaya.quiet
-            %option{ selected: 'true' }
-              Mahanikaya
-            %option
-              Dhammayut
-        %li
-          %label.quiet
-            %input#list_view{ type: 'checkbox', name: 'list_view' }
-            Uposatha List
-
   %section#calendar_wrap
     .prev
       %span &lt;
@@ -44,13 +30,46 @@
       %span &gt;
   %section#messages
 
-%script#calendarnav-template{ type: 'text/template' }
-  %ul
-    %li <%= year %>
-    %li <%= month %>
+%script#calendarNav-template{ type: 'text/template' }
+  #calendar_period
+    %ul
+      %li <%= year %> / <%= yearBE %>
+      <% if (yearAsList !== true) { %>
+      %li <%= monthName %>
+      <% } %>
+  #calendar_menu
+    %ul.settings
+      %li
+        %select.quiet{ name: 'nikaya' }
+          <% if (nikaya === 'mahanikaya') { %>
+          %option{ value: 'mahanikaya', selected: 'true' }
+            Mahanikaya
+          %option{ value: 'dhammayut' }
+            Dhammayut
+          <% } else { %>
+          %option{ value: 'mahanikaya' }
+            Mahanikaya
+          %option{ value: 'dhammayut', selected: 'true' }
+            Dhammayut
+          <% } %>
+      %li
+        %label.quiet
+          <% if (yearAsList === true) { %>
+          %input{ type: 'checkbox', name: 'year_as_list', checked: 'checked' }
+          <% } else { %>
+          %input{ type: 'checkbox', name: 'year_as_list' }
+          <% } %>
+          Year as List
 
-%script#calendarmonthtable-template{ type: 'text/template' }
+%script#calendarMonthTable-template{ type: 'text/template' }
   %table
     %tr
       %td <%= year %>
       %td <%= month %>
+      %td <%= nikaya %>
+
+%script#calendarYearAsList-template{ type: 'text/template' }
+  %ul
+    %li <%= year %>
+    %li <%= nikaya %>
+

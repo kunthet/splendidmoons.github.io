@@ -31,29 +31,7 @@
       </li>
     </ul>
   </section>
-  <section id='calendar_nav'>
-    <div id='calendar_period'></div>
-    <div id='calendar_menu'>
-      <ul class='settings'>
-        <li>
-          <select class='quiet' id='nikaya'>
-            <option selected='true'>
-              Mahanikaya
-            </option>
-            <option>
-              Dhammayut
-            </option>
-          </select>
-        </li>
-        <li>
-          <label class='quiet'>
-            <input id='list_view' name='list_view' type='checkbox'>
-            Uposatha List
-          </label>
-        </li>
-      </ul>
-    </div>
-  </section>
+  <section id='calendar_nav'></section>
   <section id='calendar_wrap'>
     <div class='prev'>
       <span>&lt;</span>
@@ -65,17 +43,61 @@
   </section>
   <section id='messages'></section>
 </script>
-<script id='calendarnav-template' type='text/template'>
-  <ul>
-    <li><%= year %></li>
-    <li><%= month %></li>
-  </ul>
+<script id='calendarNav-template' type='text/template'>
+  <div id='calendar_period'>
+    <ul>
+      <li><%= year %> / <%= yearBE %></li>
+      <% if (yearAsList !== true) { %>
+      <li><%= monthName %></li>
+      <% } %>
+    </ul>
+  </div>
+  <div id='calendar_menu'>
+    <ul class='settings'>
+      <li>
+        <select class='quiet' name='nikaya'>
+          <% if (nikaya === 'mahanikaya') { %>
+          <option selected='true' value='mahanikaya'>
+            Mahanikaya
+          </option>
+          <option value='dhammayut'>
+            Dhammayut
+          </option>
+          <% } else { %>
+          <option value='mahanikaya'>
+            Mahanikaya
+          </option>
+          <option selected='true' value='dhammayut'>
+            Dhammayut
+          </option>
+          <% } %>
+        </select>
+      </li>
+      <li>
+        <label class='quiet'>
+          <% if (yearAsList === true) { %>
+          <input checked='checked' name='year_as_list' type='checkbox'>
+          <% } else { %>
+          <input name='year_as_list' type='checkbox'>
+          <% } %>
+          Year as List
+        </label>
+      </li>
+    </ul>
+  </div>
 </script>
-<script id='calendarmonthtable-template' type='text/template'>
+<script id='calendarMonthTable-template' type='text/template'>
   <table>
     <tr>
       <td><%= year %></td>
       <td><%= month %></td>
+      <td><%= nikaya %></td>
     </tr>
   </table>
+</script>
+<script id='calendarYearAsList-template' type='text/template'>
+  <ul>
+    <li><%= year %></li>
+    <li><%= nikaya %></li>
+  </ul>
 </script>
