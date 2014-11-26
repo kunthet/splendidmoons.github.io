@@ -10,6 +10,8 @@ $fa-font-path: "../fonts"
 
 //@import 'refills/dropdown'
 @import 'refills/flashes'
+@import 'refills/modal'
+@import 'refills/vertical-tabs'
 
 nav, main, section
   +outer-container
@@ -22,44 +24,58 @@ nav, main, section
 
 #thaimoons > nav > ul > li
   display: inline-block
-  border: 1px solid $dark-blue
-  +border-radius(20px)
   padding: 10px
   height: 40px
   width: 40px
   background-repeat: no-repeat
   background-position: 50% 50%
-  &.active
-    background-color: $dark-blue
-    border: 1px solid $dark-blue-inverse
 
-#thaimoons > nav > ul > li
+#thaimoons > nav > ul
+  &.menu-icons > li
+    padding: 0
+    border: 1px solid $dark-blue
+    +border-radius(20px)
+    .modal > label
+      width: 40px
+      height: 40px
+      text-align: center
+      & > span
+        font-size: 18px
+        line-height: 18px
+        color: $dark-blue
+        padding: 10px 0
+    &:hover
+      background-color: $dark-blue
+      .modal > label > span
+        color: white
+  & > li
+    float: left
+    margin-left: 0.2em
+    margin-right: 0.2em
+    &:first-child
+      margin-left: 0
+    &:last-child
+      margin-right: 0
+    &.logo
+      background-image: url('/images/logo_w80.png')
+      background-size: 40px
+    &.language
+      background-image: url('/images/flags/gb.png')
+    &.site-title
+      border: none
+      width: auto
+      height: 40px
+      padding-top: 0
+      padding-bottom: 0
+      margin-top: 0
+      margin-bottom: 0
+
+li.language .modal-window ul > li
   float: left
-  margin-left: 0.2em
-  margin-right: 0.2em
-  &:first-child
-    margin-left: 0
-  &:last-child
-    margin-right: 0
-  &.logo
-    background-image: url('/images/logo_w80.png')
-    background-size: 40px
-    border: none
-    +border-radius(none)
-  &.menu
-    background-image: url('/images/menu.png')
-    &.active
-      background-image: url('/images/menu-inverse.png')
-  &.language
-    background-image: url('/images/flags/gb.png')
-  &.site-title
-    border: none
-    width: auto
-    height: 40px
-    padding-top: 0
-    padding-bottom: 0
-    margin-top: 0
-    margin-bottom: 0
+  width: 40%
+  margin: 10px 5%
+  button
+    width: 100%
 
 p.site-title,
 p.site-subtitle,
@@ -115,9 +131,6 @@ p.site-subtitle
         border: none
         text-align: center
 
-#pages
-  display: none
-
 div.datetext
   font-size: 1em
 
@@ -150,12 +163,18 @@ div.notes
 div.season
   font-size: 0.8em
 
-select, label
+select.ui, label.ui
   @extend %button
 
 button, select, label
   &.quiet
+    border: none
     background-color: white
     color: $base-font-color
     font-weight: normal
     padding: 0.75em 1em
+
+.modal-window > .modal-inner.nopadding
+  padding: 0
+  @include media($medium-screen)
+    padding: 0
