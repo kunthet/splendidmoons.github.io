@@ -3459,48 +3459,47 @@ nav:after, main:after, section:after {
   border-radius: 20px;
 }
 /* line 38, ../_sass/screen.sass */
+#thaimoons > nav > ul.menu-icons > li > label,
 #thaimoons > nav > ul.menu-icons > li .modal > label {
   width: 40px;
   height: 40px;
   text-align: center;
 }
-/* line 42, ../_sass/screen.sass */
+/* line 43, ../_sass/screen.sass */
+#thaimoons > nav > ul.menu-icons > li > label > span,
 #thaimoons > nav > ul.menu-icons > li .modal > label > span {
   font-size: 18px;
   line-height: 18px;
   color: #5B5E63;
   padding: 10px 0;
 }
-/* line 47, ../_sass/screen.sass */
+/* line 48, ../_sass/screen.sass */
 #thaimoons > nav > ul.menu-icons > li:hover {
   background-color: #5B5E63;
 }
-/* line 49, ../_sass/screen.sass */
+/* line 50, ../_sass/screen.sass */
+#thaimoons > nav > ul.menu-icons > li:hover > label > span,
 #thaimoons > nav > ul.menu-icons > li:hover .modal > label > span {
   color: white;
 }
-/* line 51, ../_sass/screen.sass */
+/* line 53, ../_sass/screen.sass */
 #thaimoons > nav > ul > li {
   float: left;
   margin-left: 0.2em;
   margin-right: 0.2em;
 }
-/* line 55, ../_sass/screen.sass */
+/* line 57, ../_sass/screen.sass */
 #thaimoons > nav > ul > li:first-child {
   margin-left: 0;
 }
-/* line 57, ../_sass/screen.sass */
+/* line 59, ../_sass/screen.sass */
 #thaimoons > nav > ul > li:last-child {
   margin-right: 0;
 }
-/* line 59, ../_sass/screen.sass */
+/* line 61, ../_sass/screen.sass */
 #thaimoons > nav > ul > li.logo {
   background-image: url("/images/logo_w80.png");
   background-size: 40px;
-}
-/* line 62, ../_sass/screen.sass */
-#thaimoons > nav > ul > li.language {
-  background-image: url("/images/flags/gb.png");
 }
 /* line 64, ../_sass/screen.sass */
 #thaimoons > nav > ul > li.site-title {
@@ -3514,30 +3513,19 @@ nav:after, main:after, section:after {
 }
 
 /* line 73, ../_sass/screen.sass */
-li.language .modal-window ul > li {
-  float: left;
-  width: 40%;
-  margin: 10px 5%;
-}
-/* line 77, ../_sass/screen.sass */
-li.language .modal-window ul > li button {
-  width: 100%;
-}
-
-/* line 80, ../_sass/screen.sass */
 p.site-title,
 p.site-subtitle {
   padding: 0;
   margin: 0;
 }
 
-/* line 85, ../_sass/screen.sass */
+/* line 78, ../_sass/screen.sass */
 p.site-title {
   font-size: 20px;
   line-height: 22px;
 }
 
-/* line 89, ../_sass/screen.sass */
+/* line 82, ../_sass/screen.sass */
 p.site-subtitle {
   font-size: 15px;
   line-height: 15px;
@@ -3546,71 +3534,37 @@ p.site-subtitle {
   text-indent: 1em;
 }
 
-/* line 96, ../_sass/screen.sass */
+/* line 89, ../_sass/screen.sass */
 #calendar_period {
   text-align: center;
 }
 
-/* line 100, ../_sass/screen.sass */
+/* line 93, ../_sass/screen.sass */
 #calendar_menu > ul.settings {
   text-align: right;
   float: right;
 }
-/* line 103, ../_sass/screen.sass */
+/* line 96, ../_sass/screen.sass */
 #calendar_menu > ul.settings > li {
   float: right;
 }
 
-/* line 107, ../_sass/screen.sass */
-#calendar_wrap .prev, #calendar_wrap .next, #calendar_wrap #calendar {
-  float: left;
-}
-/* line 109, ../_sass/screen.sass */
-#calendar_wrap .prev, #calendar_wrap .next {
-  width: 10%;
-  margin-top: 105px;
-}
-/* line 112, ../_sass/screen.sass */
-#calendar_wrap .prev span, #calendar_wrap .next span {
-  display: inline-block;
-  width: 20px;
-  height: 50px;
-  padding-top: 15px;
-  font-size: 20px;
-  line-height: 20px;
-}
-/* line 119, ../_sass/screen.sass */
-#calendar_wrap .prev {
-  text-align: left;
-}
-/* line 121, ../_sass/screen.sass */
-#calendar_wrap .prev span {
-  border-right: 1px solid #999;
-}
-/* line 123, ../_sass/screen.sass */
-#calendar_wrap .next {
-  text-align: right;
-}
-/* line 125, ../_sass/screen.sass */
-#calendar_wrap .next span {
-  border-left: 1px solid #999;
-}
-/* line 127, ../_sass/screen.sass */
+/* line 100, ../_sass/screen.sass */
 #calendar_wrap #calendar {
-  width: 75%;
+  width: 100%;
 }
-/* line 130, ../_sass/screen.sass */
+/* line 103, ../_sass/screen.sass */
 #calendar_wrap #calendar table th, #calendar_wrap #calendar table td {
   border: none;
   text-align: center;
 }
 
-/* line 134, ../_sass/screen.sass */
+/* line 107, ../_sass/screen.sass */
 div.datetext {
   font-size: 1em;
 }
 
-/* line 137, ../_sass/screen.sass */
+/* line 110, ../_sass/screen.sass */
 div.new,
 div.waxing,
 div.full,
@@ -3621,44 +3575,44 @@ div.waning {
   background-size: 25px;
 }
 
-/* line 146, ../_sass/screen.sass */
+/* line 119, ../_sass/screen.sass */
 div.new {
   background-image: url("/images/moon-new.png");
 }
 
-/* line 148, ../_sass/screen.sass */
+/* line 121, ../_sass/screen.sass */
 div.waxing {
   background-image: url("/images/moon-waxing.png");
 }
 
-/* line 150, ../_sass/screen.sass */
+/* line 123, ../_sass/screen.sass */
 div.full {
   background-image: url("/images/moon-full.png");
 }
 
-/* line 152, ../_sass/screen.sass */
+/* line 125, ../_sass/screen.sass */
 div.waning {
   background-image: url("/images/moon-waning.png");
 }
 
-/* line 155, ../_sass/screen.sass */
+/* line 128, ../_sass/screen.sass */
 div.astro {
   height: 14px;
   background-position: 70% 50%;
   background-size: 10px;
 }
 
-/* line 160, ../_sass/screen.sass */
+/* line 133, ../_sass/screen.sass */
 div.notes {
   font-size: 0.8em;
 }
 
-/* line 163, ../_sass/screen.sass */
+/* line 136, ../_sass/screen.sass */
 div.season {
   font-size: 0.8em;
 }
 
-/* line 170, ../_sass/screen.sass */
+/* line 143, ../_sass/screen.sass */
 button.quiet, select.quiet, label.quiet {
   border: none;
   background-color: white;
@@ -3666,13 +3620,18 @@ button.quiet, select.quiet, label.quiet {
   font-weight: normal;
   padding: 0.75em 1em;
 }
+/* line 149, ../_sass/screen.sass */
+button.quiet:hover, select.quiet:hover, label.quiet:hover {
+  background-color: #5B5E63;
+  color: white;
+}
 
-/* line 177, ../_sass/screen.sass */
+/* line 153, ../_sass/screen.sass */
 .modal-window > .modal-inner.nopadding {
   padding: 0;
 }
 @media screen and (min-width: 40em) {
-  /* line 177, ../_sass/screen.sass */
+  /* line 153, ../_sass/screen.sass */
   .modal-window > .modal-inner.nopadding {
     padding: 0;
   }

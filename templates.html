@@ -1,13 +1,18 @@
 <script id='appview-template' type='text/template'>
   <nav>
     <ul class='pull-left'>
+      <% if (showLogo === true) { %>
       <li class='logo'>&nbsp;</li>
+      <% } %>
+      <% if (showSiteTitle === true) { %>
       <li class='site-title'>
         <p class='site-title'>Thai Moons</p>
         <p class='site-subtitle'>uposatha moonday calendar</p>
       </li>
+      <% } %>
     </ul>
     <ul class='pull-right menu-icons'>
+      <% if (showMenu === true) { %>
       <li class='menu'>
         <div class='modal'>
           <label for='modal-1'>
@@ -65,10 +70,10 @@
           </div>
         </div>
       </li>
-      <li class='print'>
+      <li class='planners'>
         <div class='modal'>
           <label for='modal-4'>
-            <span class='fa fa-print'></span>
+            <span class='fa fa-file-pdf-o'></span>
           </label>
           <input class='modal-state' id='modal-4' type='checkbox'>
           <div class='modal-window'>
@@ -76,77 +81,25 @@
               <label class='modal-close' for='modal-4'></label>
               <h1>Print Year Planner PDFs</h1>
               <button class='quiet'>
-                <span class='fa fa-print'></span>
+                <span class='fa fa-file-pdf-o'></span>
                 PDFs
               </button>
             </div>
           </div>
         </div>
       </li>
-      <li class='language'>
-        <div class='modal'>
-          <label for='modal-2'>
-            <span>&nbsp;</span>
-          </label>
-          <input class='modal-state' id='modal-2' type='checkbox'>
-          <div class='modal-window'>
-            <div class='modal-inner'>
-              <label class='modal-close' for='modal-2'></label>
-              <h1>Select language</h1>
-              <ul>
-                <li>
-                  <button class='btn'>
-                    <img src='/images/flags/gb.png'>
-                    English
-                  </button>
-                </li>
-                <li>
-                  <button class='btn'>
-                    <img src='/images/flags/de.png'>
-                    German
-                  </button>
-                </li>
-                <li>
-                  <button class='btn'>
-                    <img src='/images/flags/it.png'>
-                    Italian
-                  </button>
-                </li>
-                <li>
-                  <button class='btn'>
-                    <img src='/images/flags/pt.png'>
-                    Portuguese
-                  </button>
-                </li>
-                <li>
-                  <button class='btn'>
-                    <img src='/images/flags/th.png'>
-                    Thai
-                  </button>
-                </li>
-                <li>
-                  <button class='btn'>
-                    <img src='/images/flags/hu.png'>
-                    Hungarian
-                  </button>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
+      <li class='print'>
+        <label>
+          <span class='fa fa-print'></span>
+        </label>
       </li>
+      <% } %>
     </ul>
   </nav>
   <section id='pages'></section>
   <section id='calendar_nav'></section>
   <section id='calendar_wrap'>
-    <div class='prev'>
-      <span>&lt;</span>
-    </div>
     <div id='calendar'></div>
-    <div class='next'>
-      <span>&gt;</span>
-    </div>
   </section>
   <section id='messages'></section>
 </script>
@@ -154,45 +107,41 @@
   <div id='calendar_period'>
     <ul>
       <li><%= year %> / <%= yearBE %></li>
-      <li>
-        <% if (yearAsList === true) { %>
-        &nbsp;
-        <% } else { %>
-        <%= monthName %>
-        <% } %>
-      </li>
+      <% if (period === 'Month') { %>
+      <li><%= monthName %></li>
+      <% } else { %>
+      <li>&nbsp;</li>
+      <% } %>
     </ul>
   </div>
   <div id='calendar_menu'>
     <ul class='settings'>
       <li>
-        <select class='ui quiet' name='nikaya'>
-          <% if (nikaya === 'mahanikaya') { %>
-          <option selected='true' value='mahanikaya'>
-            Mahanikaya
-          </option>
-          <option value='dhammayut'>
-            Dhammayut
-          </option>
+        <label class='ui quiet'>
+          <% if (listView === true) { %>
+          <input checked='checked' name='list_view' type='checkbox'>
           <% } else { %>
-          <option value='mahanikaya'>
-            Mahanikaya
-          </option>
-          <option selected='true' value='dhammayut'>
-            Dhammayut
-          </option>
+          <input name='list_view' type='checkbox'>
           <% } %>
-        </select>
+          <span class='fa fa-list-alt'></span>
+        </label>
       </li>
       <li>
+        <% if (period === 'Month') { %>
         <label class='ui quiet'>
-          <% if (yearAsList === true) { %>
-          <input checked='checked' name='year_as_list' type='checkbox'>
-          <% } else { %>
-          <input name='year_as_list' type='checkbox'>
-          <% } %>
-          List View
+          <input name='period' type='radio' value='Year'>Year</input>
         </label>
+        <label class='ui quiet'>
+          <input checked='checked' name='period' type='radio' value='Month'>Month</input>
+        </label>
+        <% } else { %>
+        <label class='ui quiet'>
+          <input checked='checked' name='period' type='radio' value='Year'>Year</input>
+        </label>
+        <label class='ui quiet'>
+          <input name='period' type='radio' value='Month'>Month</input>
+        </label>
+        <% } %>
       </li>
     </ul>
   </div>
@@ -206,7 +155,22 @@
     </tr>
   </table>
 </script>
-<script id='calendarYearAsList-template' type='text/template'>
+<script id='calendarMonthList-template' type='text/template'>
+  <ul>
+    <li><%= year %></li>
+    <li><%= month %></li>
+    <li><%= nikaya %></li>
+  </ul>
+</script>
+<script id='calendarYearTable-template' type='text/template'>
+  <table>
+    <tr>
+      <td><%= year %></td>
+      <td><%= nikaya %></td>
+    </tr>
+  </table>
+</script>
+<script id='calendarYearList-template' type='text/template'>
   <ul>
     <li><%= year %></li>
     <li><%= nikaya %></li>

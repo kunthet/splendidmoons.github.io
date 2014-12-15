@@ -35,6 +35,7 @@ nav, main, section
     padding: 0
     border: 1px solid $dark-blue
     +border-radius(20px)
+    & > label,
     .modal > label
       width: 40px
       height: 40px
@@ -46,6 +47,7 @@ nav, main, section
         padding: 10px 0
     &:hover
       background-color: $dark-blue
+      & > label > span,
       .modal > label > span
         color: white
   & > li
@@ -59,8 +61,6 @@ nav, main, section
     &.logo
       background-image: url('/images/logo_w80.png')
       background-size: 40px
-    &.language
-      background-image: url('/images/flags/gb.png')
     &.site-title
       border: none
       width: auto
@@ -69,13 +69,6 @@ nav, main, section
       padding-bottom: 0
       margin-top: 0
       margin-bottom: 0
-
-li.language .modal-window ul > li
-  float: left
-  width: 40%
-  margin: 10px 5%
-  button
-    width: 100%
 
 p.site-title,
 p.site-subtitle,
@@ -104,28 +97,8 @@ p.site-subtitle
       float: right
 
 #calendar_wrap
-  .prev, .next, #calendar
-    float: left
-  .prev, .next
-    width: 10%
-    margin-top: 105px
-    span
-      display: inline-block
-      width: 20px
-      height: 50px
-      padding-top: 15px
-      font-size: 20px
-      line-height: 20px
-  .prev
-    text-align: left
-    span
-      border-right: 1px solid #999
-  .next
-    text-align: right
-    span
-      border-left: 1px solid #999
   #calendar
-    width: 75%
+    width: 100%
     table
       th, td
         border: none
@@ -173,6 +146,9 @@ button, select, label
     color: $base-font-color
     font-weight: normal
     padding: 0.75em 1em
+    &:hover
+      background-color: $dark-blue
+      color: white
 
 .modal-window > .modal-inner.nopadding
   padding: 0

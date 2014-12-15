@@ -2,11 +2,16 @@
 %script#appview-template{ type: 'text/template' }
   %nav
     %ul.pull-left
+      <% if (showLogo === true) { %>
       %li.logo &nbsp;
+      <% } %>
+      <% if (showSiteTitle === true) { %>
       %li.site-title
         %p.site-title Thai Moons
         %p.site-subtitle uposatha moonday calendar
+      <% } %>
     %ul.pull-right.menu-icons
+      <% if (showMenu === true) { %>
       %li.menu
         .modal
           %label{:for => "modal-1"}
@@ -46,60 +51,26 @@
               %button.quiet
                 %span.fa.fa-plus-circle
                 Add to Google Calendar
-      %li.print
+      %li.planners
         .modal
           %label{:for => "modal-4"}
-            %span.fa.fa-print
+            %span.fa.fa-file-pdf-o
           %input#modal-4.modal-state{:type => "checkbox"}/
           .modal-window
             .modal-inner
               %label.modal-close{:for => "modal-4"}
               %h1 Print Year Planner PDFs
               %button.quiet
-                %span.fa.fa-print
+                %span.fa.fa-file-pdf-o
                 PDFs
-      %li.language
-        .modal
-          %label{:for => "modal-2"}
-            %span &nbsp;
-          %input#modal-2.modal-state{:type => "checkbox"}/
-          .modal-window
-            .modal-inner
-              %label.modal-close{:for => "modal-2"}
-              %h1 Select language
-              %ul
-                %li
-                  %button.btn
-                    %img{ src: '/images/flags/gb.png' }
-                    English
-                %li
-                  %button.btn
-                    %img{ src: '/images/flags/de.png' }
-                    German
-                %li
-                  %button.btn
-                    %img{ src: '/images/flags/it.png' }
-                    Italian
-                %li
-                  %button.btn
-                    %img{ src: '/images/flags/pt.png' }
-                    Portuguese
-                %li
-                  %button.btn
-                    %img{ src: '/images/flags/th.png' }
-                    Thai
-                %li
-                  %button.btn
-                    %img{ src: '/images/flags/hu.png' }
-                    Hungarian
+      %li.print
+        %label
+          %span.fa.fa-print
+      <% } %>
   %section#pages
   %section#calendar_nav
   %section#calendar_wrap
-    .prev
-      %span &lt;
     #calendar
-    .next
-      %span &gt;
   %section#messages
 
 
@@ -107,35 +78,33 @@
   #calendar_period
     %ul
       %li <%= year %> / <%= yearBE %>
-      %li
-        <% if (yearAsList === true) { %>
-        &nbsp;
-        <% } else { %>
-        <%= monthName %>
-        <% } %>
+      <% if (period === 'Month') { %>
+      %li <%= monthName %>
+      <% } else { %>
+      %li &nbsp;
+      <% } %>
   #calendar_menu
     %ul.settings
       %li
-        %select.ui.quiet{ name: 'nikaya' }
-          <% if (nikaya === 'mahanikaya') { %>
-          %option{ value: 'mahanikaya', selected: 'true' }
-            Mahanikaya
-          %option{ value: 'dhammayut' }
-            Dhammayut
-          <% } else { %>
-          %option{ value: 'mahanikaya' }
-            Mahanikaya
-          %option{ value: 'dhammayut', selected: 'true' }
-            Dhammayut
-          <% } %>
-      %li
         %label.ui.quiet
-          <% if (yearAsList === true) { %>
-          %input{ type: 'checkbox', name: 'year_as_list', checked: 'checked' }
+          <% if (listView === true) { %>
+          %input{ type: 'checkbox', name: 'list_view', checked: 'checked' }
           <% } else { %>
-          %input{ type: 'checkbox', name: 'year_as_list' }
+          %input{ type: 'checkbox', name: 'list_view' }
           <% } %>
-          List View
+          %span.fa.fa-list-alt
+      %li
+        <% if (period === 'Month') { %>
+        %label.ui.quiet
+          %input{ type: 'radio', name: 'period', value: 'Year' } Year
+        %label.ui.quiet
+          %input{ type: 'radio', name: 'period', value: 'Month', checked: 'checked' } Month
+        <% } else { %>
+        %label.ui.quiet
+          %input{ type: 'radio', name: 'period', value: 'Year', checked: 'checked' } Year
+        %label.ui.quiet
+          %input{ type: 'radio', name: 'period', value: 'Month' } Month
+        <% } %>
 
 %script#calendarMonthTable-template{ type: 'text/template' }
   %table
@@ -144,7 +113,19 @@
       %td <%= month %>
       %td <%= nikaya %>
 
-%script#calendarYearAsList-template{ type: 'text/template' }
+%script#calendarMonthList-template{ type: 'text/template' }
+  %ul
+    %li <%= year %>
+    %li <%= month %>
+    %li <%= nikaya %>
+
+%script#calendarYearTable-template{ type: 'text/template' }
+  %table
+    %tr
+      %td <%= year %>
+      %td <%= nikaya %>
+
+%script#calendarYearList-template{ type: 'text/template' }
   %ul
     %li <%= year %>
     %li <%= nikaya %>
