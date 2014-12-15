@@ -3538,33 +3538,42 @@ p.site-subtitle {
 #calendar_period {
   text-align: center;
 }
+/* line 92, ../_sass/screen.sass */
+#calendar_period ul > li .prev, #calendar_period ul > li .next, #calendar_period ul > li .val {
+  display: inline-block;
+  text-align: center;
+}
+/* line 95, ../_sass/screen.sass */
+#calendar_period ul > li .val {
+  width: 15ex;
+}
 
-/* line 93, ../_sass/screen.sass */
+/* line 99, ../_sass/screen.sass */
 #calendar_menu > ul.settings {
   text-align: right;
   float: right;
 }
-/* line 96, ../_sass/screen.sass */
+/* line 102, ../_sass/screen.sass */
 #calendar_menu > ul.settings > li {
   float: right;
 }
 
-/* line 100, ../_sass/screen.sass */
+/* line 106, ../_sass/screen.sass */
 #calendar_wrap #calendar {
   width: 100%;
 }
-/* line 103, ../_sass/screen.sass */
+/* line 109, ../_sass/screen.sass */
 #calendar_wrap #calendar table th, #calendar_wrap #calendar table td {
   border: none;
   text-align: center;
 }
 
-/* line 107, ../_sass/screen.sass */
+/* line 113, ../_sass/screen.sass */
 div.datetext {
   font-size: 1em;
 }
 
-/* line 110, ../_sass/screen.sass */
+/* line 116, ../_sass/screen.sass */
 div.new,
 div.waxing,
 div.full,
@@ -3575,44 +3584,44 @@ div.waning {
   background-size: 25px;
 }
 
-/* line 119, ../_sass/screen.sass */
+/* line 125, ../_sass/screen.sass */
 div.new {
   background-image: url("/images/moon-new.png");
 }
 
-/* line 121, ../_sass/screen.sass */
+/* line 127, ../_sass/screen.sass */
 div.waxing {
   background-image: url("/images/moon-waxing.png");
 }
 
-/* line 123, ../_sass/screen.sass */
+/* line 129, ../_sass/screen.sass */
 div.full {
   background-image: url("/images/moon-full.png");
 }
 
-/* line 125, ../_sass/screen.sass */
+/* line 131, ../_sass/screen.sass */
 div.waning {
   background-image: url("/images/moon-waning.png");
 }
 
-/* line 128, ../_sass/screen.sass */
+/* line 134, ../_sass/screen.sass */
 div.astro {
   height: 14px;
   background-position: 70% 50%;
   background-size: 10px;
 }
 
-/* line 133, ../_sass/screen.sass */
+/* line 139, ../_sass/screen.sass */
 div.notes {
   font-size: 0.8em;
 }
 
-/* line 136, ../_sass/screen.sass */
+/* line 142, ../_sass/screen.sass */
 div.season {
   font-size: 0.8em;
 }
 
-/* line 143, ../_sass/screen.sass */
+/* line 149, ../_sass/screen.sass */
 button.quiet, select.quiet, label.quiet {
   border: none;
   background-color: white;
@@ -3620,18 +3629,18 @@ button.quiet, select.quiet, label.quiet {
   font-weight: normal;
   padding: 0.75em 1em;
 }
-/* line 149, ../_sass/screen.sass */
+/* line 155, ../_sass/screen.sass */
 button.quiet:hover, select.quiet:hover, label.quiet:hover {
   background-color: #5B5E63;
   color: white;
 }
 
-/* line 153, ../_sass/screen.sass */
+/* line 159, ../_sass/screen.sass */
 .modal-window > .modal-inner.nopadding {
   padding: 0;
 }
 @media screen and (min-width: 40em) {
-  /* line 153, ../_sass/screen.sass */
+  /* line 159, ../_sass/screen.sass */
   .modal-window > .modal-inner.nopadding {
     padding: 0;
   }

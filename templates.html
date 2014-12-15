@@ -106,11 +106,27 @@
 <script id='calendarNav-template' type='text/template'>
   <div id='calendar_period'>
     <ul>
-      <li><%= year %> / <%= yearBE %></li>
+      <li class='year'>
+        <label class='ui quiet'>
+          <span class='prev fa fa-chevron-left'></span>
+        </label>
+        <span class='val'><%= year %> / <%= yearBE %></span>
+        <label class='ui quiet'>
+          <span class='prev fa fa-chevron-right'></span>
+        </label>
+      </li>
       <% if (period === 'Month') { %>
-      <li><%= monthName %></li>
+      <li class='month'>
+        <label class='ui quiet'>
+          <span class='prev fa fa-chevron-left'></span>
+        </label>
+        <span class='val'><%= monthName %></span>
+        <label class='ui quiet'>
+          <span class='next fa fa-chevron-right'></span>
+        </label>
+      </li>
       <% } else { %>
-      <li>&nbsp;</li>
+      <li class='month'>&nbsp;</li>
       <% } %>
     </ul>
   </div>
@@ -123,7 +139,7 @@
           <% } else { %>
           <input name='list_view' type='checkbox'>
           <% } %>
-          <span class='fa fa-list-alt'></span>
+          <span>List</span>
         </label>
       </li>
       <li>

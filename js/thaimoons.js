@@ -114,6 +114,10 @@ App.Router = Backbone.Router.extend({
     $('#calendar').html(new App.Views.Calendar(App.config.period + view).render(App.config).el);
 
     var that = this;
+    $('#calendar_period > ul > li.year > label > span.prev').parent().click(function(){ that.prevYear(); });
+    $('#calendar_period > ul > li.year > label > span.next').parent().click(function(){ that.nextYear(); });
+    $('#calendar_period > ul > li.month > label > span.prev').parent().click(function(){ that.prevMonth(); });
+    $('#calendar_period > ul > li.month > label > span.next').parent().click(function(){ that.nextMonth(); });
     $('input:checkbox[name=list_view]').change(function(){ that.listViewChanged($(this)); });
     $('input:radio[name=period]').change(function(){ that.periodChanged($(this)); });
   },
@@ -144,36 +148,61 @@ App.Router = Backbone.Router.extend({
     this.calendarRender();
   },
 
-  keyNav: function(e) {
-    var year = App.config.year;
-    var month = App.config.month;
+  go: function() {
+    if (App.config.period === 'Month') {
+      this.navigate('calendar/'+App.config.year+'/'+App.config.month, { trigger: true, replace: true });
+    } else {
+      this.navigate('calendar/'+App.config.year, { trigger: true, replace: true });
+    }
+  },
 
+  prevYear: function() {
+    App.config.year--;
+    this.go();
+  },
+
+  nextYear: function() {
+    App.config.year++;
+    this.go();
+  },
+
+  prevMonth: function() {
+    App.config.month--;
+    if (App.config.month < 1) { App.config.year--; App.config.month = 12; }
+    this.go();
+  },
+
+  nextMonth: function() {
+    App.config.month++;
+    if (App.config.month > 12) { App.config.year++; App.config.month = 1; }
+    this.go();
+  },
+
+  keyNav: function(e) {
     if (App.config.period === 'Month') {
       switch (e.keyCode) {
         // left, up, k
         case 37:
         case 38:
         case 75:
-          month = --month;
-          if (month < 1) { year--; month = 12; }
+          this.prevMonth();
           break;
 
         // right, down, j
         case 39:
         case 40:
         case 74:
-          month = ++month;
-          if (month > 12) { year++; month = 1; }
+          this.nextMonth();
           break;
 
         // PgUp
         case 33:
-          year--;
+          this.prevYear();
           break;
 
         // PgDown
         case 34:
-          year++;
+          this.nextYear();
           break;
 
         default:
@@ -187,7 +216,7 @@ App.Router = Backbone.Router.extend({
         case 38:
         case 75:
         case 33:
-          year--;
+          this.prevYear();
           break;
 
         // right, down, j, PgDown
@@ -195,7 +224,7 @@ App.Router = Backbone.Router.extend({
         case 40:
         case 74:
         case 34:
-          year++;
+          this.nextYear();
           break;
 
         default:
@@ -203,13 +232,8 @@ App.Router = Backbone.Router.extend({
           return;
       }
     }
-
-    if (App.config.period === 'Month') {
-      this.navigate('calendar/'+year+'/'+month, { trigger: true });
-    } else {
-      this.navigate('calendar/'+year, { trigger: true });
-    }
   },
+
 });
 
 // === It lives! ===

@@ -77,11 +77,21 @@
 %script#calendarNav-template{ type: 'text/template' }
   #calendar_period
     %ul
-      %li <%= year %> / <%= yearBE %>
+      %li.year
+        %label.ui.quiet
+          %span.prev.fa.fa-chevron-left
+        %span.val <%= year %> / <%= yearBE %>
+        %label.ui.quiet
+          %span.prev.fa.fa-chevron-right
       <% if (period === 'Month') { %>
-      %li <%= monthName %>
+      %li.month
+        %label.ui.quiet
+          %span.prev.fa.fa-chevron-left
+        %span.val <%= monthName %>
+        %label.ui.quiet
+          %span.next.fa.fa-chevron-right
       <% } else { %>
-      %li &nbsp;
+      %li.month &nbsp;
       <% } %>
   #calendar_menu
     %ul.settings
@@ -92,7 +102,7 @@
           <% } else { %>
           %input{ type: 'checkbox', name: 'list_view' }
           <% } %>
-          %span.fa.fa-list-alt
+          %span List
       %li
         <% if (period === 'Month') { %>
         %label.ui.quiet
