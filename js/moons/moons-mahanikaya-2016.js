@@ -2,17 +2,17 @@
 var MOONS = MOONS || [];
 MOONS['mahanikaya'] = MOONS['mahanikaya'] || [];
 
-var NOTES = NOTES || [];
-NOTES['mahanikaya'] = NOTES['mahanikaya'] || [];
-
-NOTES['mahanikaya'][2016] = [
-  [ '2016-02-22', 'Māgha Pūjā'   ],
-  [ '2016-05-20', 'Vesākha Pūjā' ],
-  [ '2016-07-03', 'adhikavāra (extra day)' ],
-  [ '2016-07-19', 'Āsāḷhā Pūjā'  ],
-  [ '2016-07-20', 'Vassa begins' ],
-  [ '2016-10-16', 'Pavāraṇā'     ],
-];
+//var NOTES = NOTES || [];
+//NOTES['mahanikaya'] = NOTES['mahanikaya'] || [];
+//
+//NOTES['mahanikaya'][2016] = [
+//  [ '2016-02-22', 'Māgha Pūjā'   ],
+//  [ '2016-05-20', 'Vesākha Pūjā' ],
+//  [ '2016-07-03', 'adhikavāra (extra day)' ],
+//  [ '2016-07-19', 'Āsāḷhā Pūjā'  ],
+//  [ '2016-07-20', 'Vassa begins' ],
+//  [ '2016-10-16', 'Pavāraṇā'     ],
+//];
 
 MOONS['mahanikaya'][2016] = [
   [ '2016-01-02', 'waning' ],

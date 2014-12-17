@@ -1,4 +1,4 @@
-// vim: foldmethod=indent foldlevel=1
+// vim: foldmethod=indent foldlevel=0
 
 // Some useful data
 
@@ -60,6 +60,167 @@ var tpl = {
   },
 }
 
+// === Helpers ===
+
+function dateText(date) {
+  var out = '';
+  var isodate = date.toISOString().substr(0, 10);
+
+  var m = _.find(MOONS['mahanikaya'][date.getFullYear()], function(d){ return d.date === isodate; });
+  if (typeof m === 'undefined') {
+    out += '<div class="datetext">'+date.getDate()+'</div>';
+  } else {
+    out += '<div class="datetext '+m.phase+'">&nbsp;</div>';
+  }
+
+  var a = _.find(MOONS['astro'][date.getFullYear()], function(d){ return d.date === isodate; });
+  if (typeof a !== 'undefined') {
+    out += '<div class="astro '+a.phase+'">&nbsp;</div>';
+  }
+
+  //var n = _.find(NOTES['mahanikaya'][date.getFullYear()], function(d){ return d.date === isodate; });
+  //if (typeof n !== 'undefined') {
+  //  out += '<div class="notes">'+n.note+'</div>';
+  //}
+
+  //if (typeof m !== 'undefined') {
+  //  if (m.phase === 'full') {
+  //    out += '<div class="season">15th Hemanta n/m</div>';
+  //  } else if (m.phase === 'new') {
+  //    // TODO
+  //  }
+  //}
+
+  return out;
+}
+
+function calendarMonthTable(year, month) {
+  month--;
+  var monthStart = new Date(year, month, 1);
+  if (month < 11) {
+    var monthEnd = new Date(year, month+1, 0);
+  } else {
+    var monthEnd = new Date(year+1, 0, 0);
+  }
+
+  var out = "";
+
+  out += '<table><thead>';
+
+  // header with weekdays
+
+  out += '<tr><th>' + weekdayNamesShort.join('</th><th>') + '</th></tr></thead>';
+
+  out += '<tbody>';
+
+  var d = new Date(monthStart);
+
+  // first row with empties until month begins
+
+  out += '<tr>';
+  if (monthStart.getDay() === 0) {
+    var empties = 6;
+  } else {
+    var empties = monthStart.getDay()-1;
+  }
+
+  for (i=0; i<empties; i++) {
+    out += '<td></td>';
+  }
+
+  for (i=0; i<7-empties; i++) {
+    out += '<td>'+dateText(d)+'</td>';
+    d.setDate(d.getDate()+1);
+  }
+
+  out += '</tr>';
+
+  // middle rows
+
+  var untilDate = monthEnd.getDate() - monthEnd.getDay();
+
+  d.setDate(d.getDate()-1);
+  while (d.getDate()+6 <= untilDate) {
+    out += '<tr>';
+    for (i=0; i<7; i++) {
+      d.setDate(d.getDate()+1);
+      out += '<td>'+dateText(d)+'</td>';
+    }
+    out += '</tr>';
+  }
+
+  // last row with empties
+
+  if (d < monthEnd) {
+    out += '<tr>';
+    empties = 7-monthEnd.getDay();
+    for (i=0; i<7; i++) {
+      if (i<7-empties) {
+        d.setDate(d.getDate()+1);
+        out += '<td>'+dateText(d)+'</td>';
+      } else {
+        out += '<td></td>';
+      }
+    }
+    out += '</tr>';
+  }
+
+  out += '</tbody></table>';
+
+  return out;
+}
+
+function calendarMonthList(year, month) {
+  month--;
+  var monthStart = new Date(year, month, 1);
+  if (month < 11) {
+    var monthEnd = new Date(year, month+1, 0);
+  } else {
+    var monthEnd = new Date(year+1, 0, 0);
+  }
+
+  var out = "";
+
+  out += "<ul>";
+
+  var d = new Date(monthStart);
+  d.setDate(d.getDate()-1);
+  while (d < monthEnd) {
+    d.setDate(d.getDate()+1);
+    out += '<li>'+dateText(d)+'</li>';
+  }
+
+  out += "</ul>";
+
+  return out;
+}
+
+function calendarYearTable(year) {
+  var out = "";
+
+  for (month = 1; month <= 12; month++) {
+    out += "<div class='month_wrap'>";
+    out += "<h3>"+monthNames[month-1]+"</h3>";
+    out += calendarMonthTable(year, month);
+    out += "</div>";
+  }
+
+  return out;
+}
+
+function calendarYearList(year) {
+  var out = "";
+
+  for (month = 1; month <= 12; month++) {
+    out += "<div class='month_wrap'>";
+    out += "<h3>"+monthNames[month-1]+"</h3>";
+    out += calendarMonthList(year, month);
+    out += "</div>";
+  }
+
+  return out;
+}
+
 // === Views ===
 
 App.Views.CalendarNav = Backbone.View.extend({
@@ -81,10 +242,24 @@ App.Views.CalendarNav = Backbone.View.extend({
 
 App.Views.Calendar = Backbone.View.extend({
   initialize: function(view) {
-    this.template = _.template(tpl.get('calendar'+view));
+    this.view = view;
   },
   render: function(data) {
-    this.$el.html(this.template(data));
+    var html = "";
+    if (App.config.period === 'Month') {
+      if (this.view === 'Table') {
+       html = calendarMonthTable(App.config.year, App.config.month);
+      } else {
+       html = calendarMonthList(App.config.year, App.config.month);
+      }
+    } else {
+      if (this.view === 'Table') {
+       html = calendarYearTable(App.config.year);
+      } else {
+       html = calendarYearList(App.config.year);
+      }
+    }
+    this.$el.html(html);
     return this;
   },
 });
@@ -111,7 +286,7 @@ App.Router = Backbone.Router.extend({
   calendarRender: function() {
     $('#calendar_nav').html(new App.Views.CalendarNav().render(App.config).el);
     var view = (App.config.listView === true) ? 'List' : 'Table';
-    $('#calendar').html(new App.Views.Calendar(App.config.period + view).render(App.config).el);
+    $('#calendar').html(new App.Views.Calendar(view).render(App.config).el);
 
     var that = this;
     $('#calendar_period > ul > li.year > label > span.prev').parent().click(function(){ that.prevYear(); });
@@ -233,7 +408,6 @@ App.Router = Backbone.Router.extend({
       }
     }
   },
-
 });
 
 // === It lives! ===
@@ -278,6 +452,5 @@ tpl.loadTemplates(function(){
     $(".js-vertical-tab").removeClass("is-active");
     $(".js-vertical-tab[rel^='"+accordion_activeTab+"']").addClass("is-active");
   });
-
 });
 

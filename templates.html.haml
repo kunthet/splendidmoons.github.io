@@ -116,27 +116,3 @@
           %input{ type: 'radio', name: 'period', value: 'Month' } Month
         <% } %>
 
-%script#calendarMonthTable-template{ type: 'text/template' }
-  %table
-    %tr
-      %td <%= year %>
-      %td <%= month %>
-      %td <%= nikaya %>
-
-%script#calendarMonthList-template{ type: 'text/template' }
-  %ul
-    %li <%= year %>
-    %li <%= month %>
-    %li <%= nikaya %>
-
-%script#calendarYearTable-template{ type: 'text/template' }
-  %table
-    %tr
-      %td <%= year %>
-      %td <%= nikaya %>
-
-%script#calendarYearList-template{ type: 'text/template' }
-  %ul
-    %li <%= year %>
-    %li <%= nikaya %>
-
