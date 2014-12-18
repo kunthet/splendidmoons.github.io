@@ -10,6 +10,8 @@ var weekdayNamesShort = [ 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun' ];
 var MOONS = [];
 
 MOONS[2013] = {
+  status: 'confirmed',
+
   mahanikaya: [
     { date: '2013-01-05', phase: 'waning' },
     { date: '2013-01-11', phase: 'new' },
@@ -117,6 +119,8 @@ MOONS[2013] = {
 };
 
 MOONS[2014] = {
+  status: 'confirmed',
+
   mahanikaya: [
     { date: '2014-01-08', phase: 'waxing' },
     { date: '2014-01-15', phase: 'full' },
@@ -224,6 +228,8 @@ MOONS[2014] = {
 };
 
 MOONS[2015] = {
+  status: 'confirmed',
+
   mahanikaya: [
     { date: '2015-01-04', phase: 'full' },
     { date: '2015-01-12', phase: 'waning' },
@@ -330,6 +336,8 @@ MOONS[2015] = {
 };
 
 MOONS[2016] = {
+  status: 'provisional',
+
   mahanikaya: [
     { date: '2016-01-02', phase: 'waning' },
     { date: '2016-01-08', phase: 'new' },
@@ -637,11 +645,18 @@ function calendarYearTable(year) {
   var omega = "";
 
   for (month = 1; month <= 12; month++) {
-    omega = (month % 3 === 0) ? ' omega' : '';
+    omega = "";
+    if (month % 3 === 0) {
+      omega = ' omega';
+      out += "<section>";
+    }
     out += "<div class='month_wrap"+omega+"'>";
     out += "<h3>"+monthNames[month-1]+"</h3>";
     out += calendarMonthTable(year, month);
     out += "</div>";
+    if (month % 3 === 0) {
+      out += "</section>";
+    }
   }
 
   return out;
@@ -675,6 +690,17 @@ App.Views.CalendarNav = Backbone.View.extend({
 
     this.$el.html(this.template(data));
 
+    return this;
+  },
+});
+
+App.Views.CalendarMessage = Backbone.View.extend({
+  initialize: function(type) {
+    this.template = _.template(tpl.get(type));
+  },
+
+  render: function(message) {
+    this.$el.html(this.template({ message: message }));
     return this;
   },
 });
@@ -724,6 +750,19 @@ App.Router = Backbone.Router.extend({
 
   calendarRender: function() {
     $('#calendar_nav').html(new App.Views.CalendarNav().render(App.config).el);
+
+    if (typeof MOONS[App.config.year] !== 'undefined' && MOONS[App.config.year].status !== 'confirmed') {
+      var message = "";
+      switch(MOONS[App.config.year].status) {
+        case 'provisional':
+        default:
+          var message = "Using provisional uposatha dates.";
+      }
+      $('#calendar_message').html(new App.Views.CalendarMessage('flash-info').render(message).el);
+    } else {
+      $('#calendar_message').html('');
+    }
+
     var view = (App.config.listView === true) ? 'List' : 'Table';
     $('#calendar').html(new App.Views.Calendar(view).render(App.config).el);
 
@@ -809,35 +848,23 @@ App.Router = Backbone.Router.extend({
           this.nextMonth();
           break;
 
-        // PgUp
-        case 33:
-          this.prevYear();
-          break;
-
-        // PgDown
-        case 34:
-          this.nextYear();
-          break;
-
         default:
           console.log(e.keyCode);
           return;
       }
     } else {
       switch (e.keyCode) {
-        // left, up, k, PgUp
+        // left, up, k
         case 37:
         case 38:
         case 75:
-        case 33:
           this.prevYear();
           break;
 
-        // right, down, j, PgDown
+        // right, down, j
         case 39:
         case 40:
         case 74:
-        case 34:
           this.nextYear();
           break;
 

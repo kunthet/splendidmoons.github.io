@@ -22,6 +22,9 @@ nav, main, section
 .pull-right
   float: right
 
+#thaimoons > nav
+  margin-bottom: 1em
+
 #thaimoons > nav > ul > li
   display: inline-block
   padding: 10px
@@ -120,8 +123,31 @@ p.site-subtitle
     font-weight: normal
     color: $dark-gray
 
+#calendar_message
+  @include span-columns(4)
+  @include shift(4)
+
+#calendar_period
+  @include span-columns(4)
+  @include shift(4)
+
+#calendar_menu
+  @include span-columns(4)
+  @include omega()
+  margin-top: 1em
+  margin-bottom: 1em
+
 .omega
   @include omega()
+
+.col4
+  @include span-columns(4)
+
+.col6
+  @include span-columns(6)
+
+.col8
+  @include span-columns(8)
 
 div.datetext
   font-size: 1em

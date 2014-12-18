@@ -67,7 +67,7 @@
         %label
           %span.fa.fa-print
       <% } %>
-  %section#pages
+  %section#calendar_message
   %section#calendar_nav
   %section#calendar_wrap
     #calendar
@@ -82,7 +82,7 @@
           %span.prev.fa.fa-chevron-left
         %span.val <%= year %> / <%= yearBE %>
         %label.ui.quiet
-          %span.prev.fa.fa-chevron-right
+          %span.next.fa.fa-chevron-right
       <% if (period === 'Month') { %>
       %li.month
         %label.ui.quiet
@@ -115,4 +115,14 @@
         %label.ui.quiet
           %input{ type: 'radio', name: 'period', value: 'Month' } Month
         <% } %>
+
+%script#flash-notice-template{ type: 'text/template' }
+  .flash-notice
+    <%= message %>
+
+%script#flash-info-template{ type: 'text/template' }
+  .flash-info
+    %span.fa.fa-info-circle
+    <%= message %>
+
 

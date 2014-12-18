@@ -96,7 +96,7 @@
       <% } %>
     </ul>
   </nav>
-  <section id='pages'></section>
+  <section id='calendar_message'></section>
   <section id='calendar_nav'></section>
   <section id='calendar_wrap'>
     <div id='calendar'></div>
@@ -112,7 +112,7 @@
         </label>
         <span class='val'><%= year %> / <%= yearBE %></span>
         <label class='ui quiet'>
-          <span class='prev fa fa-chevron-right'></span>
+          <span class='next fa fa-chevron-right'></span>
         </label>
       </li>
       <% if (period === 'Month') { %>
@@ -160,5 +160,16 @@
         <% } %>
       </li>
     </ul>
+  </div>
+</script>
+<script id='flash-notice-template' type='text/template'>
+  <div class='flash-notice'>
+    <%= message %>
+  </div>
+</script>
+<script id='flash-info-template' type='text/template'>
+  <div class='flash-info'>
+    <span class='fa fa-info-circle'></span>
+    <%= message %>
   </div>
 </script>
