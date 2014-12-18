@@ -3748,7 +3748,7 @@ div.season {
 
 /* line 188, ../_sass/screen.sass */
 button.quiet, select.quiet, label.quiet {
-  border: none;
+  border: 1px solid #e6e6e6;
   background-color: white;
   color: #333;
   font-weight: normal;
