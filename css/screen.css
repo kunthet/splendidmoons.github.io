@@ -3498,7 +3498,7 @@ nav:after, main:after, section:after {
 }
 /* line 61, ../_sass/screen.sass */
 #thaimoons > nav > ul > li.logo {
-  background-image: url("/images/logo_w80.png");
+  background-image: url("/images/logo-bw.svg");
   background-size: 40px;
 }
 /* line 64, ../_sass/screen.sass */
@@ -3586,22 +3586,22 @@ div.waning {
 
 /* line 125, ../_sass/screen.sass */
 div.new {
-  background-image: url("/images/moon-new.png");
+  background-image: url("/images/moon-new.svg");
 }
 
 /* line 127, ../_sass/screen.sass */
 div.waxing {
-  background-image: url("/images/moon-waxing.png");
+  background-image: url("/images/moon-waxing.svg");
 }
 
 /* line 129, ../_sass/screen.sass */
 div.full {
-  background-image: url("/images/moon-full.png");
+  background-image: url("/images/moon-full.svg");
 }
 
 /* line 131, ../_sass/screen.sass */
 div.waning {
-  background-image: url("/images/moon-waning.png");
+  background-image: url("/images/moon-waning.svg");
 }
 
 /* line 134, ../_sass/screen.sass */
