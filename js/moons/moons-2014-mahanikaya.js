@@ -1,6 +1,8 @@
 
 var MOONS = MOONS || [];
-MOONS['mahanikaya'] = MOONS['mahanikaya'] || [];
+MOONS[2014] = MOONS[2014] || {};
+
+MOONS[2014].status = 'confirmed';
 
 // TODO: Provide an .add() by extending Array
 // MOONS['mahanikaya'][2014].add('2014-02-14', { notes: { major: 'Māgha Pūjā' } } );
@@ -10,7 +12,7 @@ MOONS['mahanikaya'] = MOONS['mahanikaya'] || [];
 //MOONS['mahanikaya'][2014]['2014-07-12'].notes.major = 'Vassa begins';
 //MOONS['mahanikaya'][2014]['2014-10-08'].notes.major = 'Pavāraṇā';
 
-MOONS['mahanikaya'][2014] = [
+MOONS[2014].mahanikaya = [
   { date: '2014-01-08', phase: 'waxing' },
   { date: '2014-01-15', phase: 'full' },
   { date: '2014-01-23', phase: 'waning' },

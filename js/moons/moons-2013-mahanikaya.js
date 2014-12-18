@@ -1,8 +1,10 @@
 
 var MOONS = MOONS || [];
-MOONS['mahanikaya'] = MOONS['mahanikaya'] || [];
+MOONS[2013] = MOONS[2013] || {};
 
-MOONS['mahanikaya'][2013] = [
+MOONS[2013].status = 'confirmed';
+
+MOONS[2013].mahanikaya = [
   { date: '2013-01-05', phase: 'waning' },
   { date: '2013-01-11', phase: 'new' },
   { date: '2013-01-19', phase: 'waxing' },

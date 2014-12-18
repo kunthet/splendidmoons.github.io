@@ -1,8 +1,8 @@
 
 var MOONS = MOONS || [];
-MOONS['astro'] = MOONS['astro'] || [];
+MOONS[2013] = MOONS[2013] || {};
 
-MOONS['astro'][2013] = [
+MOONS[2013].astro = [
   { date: '2013-01-05', phase: 'waning' },
   { date: '2013-01-11', phase: 'new' },
   { date: '2013-01-18', phase: 'waxing' },

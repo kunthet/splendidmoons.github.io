@@ -1,10 +1,10 @@
 
 var MOONS = MOONS || [];
-MOONS['astro'] = MOONS['astro'] || [];
+MOONS[2015] = MOONS[2015] || {};
 
 // http://eclipse.gsfc.nasa.gov/phase/phase2001gmt.html
 
-MOONS['astro'][2015] = [
+MOONS[2015].astro = [
   { date: '2015-01-05', phase: 'full' },
   { date: '2015-01-13', phase: 'waning' },
   { date: '2015-01-20', phase: 'new' },

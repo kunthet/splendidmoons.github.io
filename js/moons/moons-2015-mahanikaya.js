@@ -1,6 +1,8 @@
 
 var MOONS = MOONS || [];
-MOONS['mahanikaya'] = MOONS['mahanikaya'] || [];
+MOONS[2015] = MOONS[2015] || {};
+
+MOONS[2015].status = 'confirmed';
 
 //var NOTES = NOTES || [];
 //NOTES['mahanikaya'] = NOTES['mahanikaya'] || [];
@@ -14,7 +16,7 @@ MOONS['mahanikaya'] = MOONS['mahanikaya'] || [];
 //  [ '2015-10-27', 'Pavāraṇā'     ],
 //];
 
-MOONS['mahanikaya'][2015] = [
+MOONS[2015].mahanikaya = [
   { date: '2015-01-04', phase: 'full' },
   { date: '2015-01-12', phase: 'waning' },
   { date: '2015-01-19', phase: 'new' },
