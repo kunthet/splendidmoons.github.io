@@ -3,6 +3,7 @@
 // Some useful data
 
 var monthNames = [ 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December' ];
+var monthNamesShort = [ 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec' ];
 var weekdayNamesShort = [ 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun' ];
 
 var today = new Date();
@@ -95,6 +96,29 @@ function dateText(date) {
   //    // TODO
   //  }
   //}
+
+  return out;
+}
+
+function dateTextListItem(date) {
+  var out = '';
+  var isodate = date.toISOString().substr(0, 10);
+
+  out += '<span class="date">'+monthNamesShort[date.getMonth()]+' '+date.getDate()+'</span>';
+
+  if (typeof MOONS[date.getFullYear()] === 'undefined') {
+    return out;
+  }
+
+  var m = _.find(MOONS[date.getFullYear()].mahanikaya, function(d){ return d.date === isodate; });
+  if (typeof m !== 'undefined') {
+    out += '<span class="phase">'+m.phase+'</span>';
+  }
+
+  var a = _.find(MOONS[date.getFullYear()].astro, function(d){ return d.date === isodate; });
+  if (typeof a !== 'undefined') {
+    out += '<span class="phase">'+a.phase+' (a)</span>';
+  }
 
   return out;
 }
@@ -192,7 +216,7 @@ function calendarMonthList(year, month) {
   d.setDate(d.getDate()-1);
   while (d < monthEnd) {
     d.setDate(d.getDate()+1);
-    out += '<li>'+dateText(d)+'</li>';
+    out += '<li>'+dateTextListItem(d)+'</li>';
   }
 
   out += "</ul>";
@@ -222,14 +246,24 @@ function calendarYearTable(year) {
   return out;
 }
 
+// TODO: almost the same as calendarYearTable()
 function calendarYearList(year) {
   var out = "";
+  var omega = "";
 
   for (month = 1; month <= 12; month++) {
-    out += "<div class='month_wrap'>";
+    omega = "";
+    if (month % 3 === 0) {
+      omega = ' omega';
+      out += "<section>";
+    }
+    out += "<div class='month_wrap"+omega+"'>";
     out += "<h3>"+monthNames[month-1]+"</h3>";
     out += calendarMonthList(year, month);
     out += "</div>";
+    if (month % 3 === 0) {
+      out += "</section>";
+    }
   }
 
   return out;
