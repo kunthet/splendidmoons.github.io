@@ -109,6 +109,19 @@ p.site-subtitle
       th, td
         border: none
         text-align: center
+      th
+        color: $medium-gray
+
+.month_wrap
+  @include span-columns(4)
+  h3
+    text-align: center
+    font-size: 1.5em
+    font-weight: normal
+    color: $dark-gray
+
+.omega
+  @include omega()
 
 div.datetext
   font-size: 1em

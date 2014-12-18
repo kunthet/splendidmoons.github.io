@@ -634,9 +634,11 @@ function calendarMonthList(year, month) {
 
 function calendarYearTable(year) {
   var out = "";
+  var omega = "";
 
   for (month = 1; month <= 12; month++) {
-    out += "<div class='month_wrap'>";
+    omega = (month % 3 === 0) ? ' omega' : '';
+    out += "<div class='month_wrap"+omega+"'>";
     out += "<h3>"+monthNames[month-1]+"</h3>";
     out += calendarMonthTable(year, month);
     out += "</div>";
