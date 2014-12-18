@@ -316,7 +316,7 @@ App.Router = Backbone.Router.extend({
       switch(MOONS[App.config.year].status) {
         case 'provisional':
         default:
-          var message = "Using provisional uposatha dates.";
+          var message = "Provisional uposatha dates";
       }
       $('#calendar_message').html(new App.Views.CalendarMessage('flash-info').render(message).el);
     } else {
