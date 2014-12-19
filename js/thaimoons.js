@@ -363,6 +363,7 @@ App.Router = Backbone.Router.extend({
     App.config.period = 'Month';
     this.template = _.template(tpl.get('appview'));
     $('#thaimoons').html(this.template(App.config));
+    $('#thaimoons > nav li.print').click(function(e){ e.preventDefault(); window.print(); });
   },
 
   index: function() {
