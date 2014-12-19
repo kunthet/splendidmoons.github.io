@@ -5,6 +5,11 @@
 var monthNames = [ 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December' ];
 var monthNamesShort = [ 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec' ];
 var weekdayNamesShort = [ 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun' ];
+var phaseNames = [];
+phaseNames['new'] = 'New Moon';
+phaseNames['waxing'] = 'Waxing Moon';
+phaseNames['full'] = 'Full Moon';
+phaseNames['waning'] = 'Waning Moon';
 
 var today = new Date();
 var year = today.getFullYear();
@@ -21,7 +26,7 @@ var App = {
     showLogo: true,
     showSiteTitle: true,
     showMenu: true,
-    nikaya: 'mahanikaya',
+    //nikaya: 'mahanikaya',
   },
 
   Views: {},
@@ -71,31 +76,30 @@ function dateText(date) {
     return '<div class="datetext">'+date.getDate()+'</div>';
   }
 
-  var m = _.find(MOONS[date.getFullYear()].mahanikaya, function(d){ return d.date === isodate; });
+  var moon = _.find(MOONS[date.getFullYear()].mahanikaya.phases, function(d){ return d.date === isodate; });
+  var astro = _.find(MOONS[date.getFullYear()].astro.phases, function(d){ return d.date === isodate; });
+  var major = _.find(MOONS[date.getFullYear()].mahanikaya.major, function(d){ return d.date === isodate; });
 
-  if (typeof m === 'undefined') {
-    out += '<div class="datetext">'+date.getDate()+'</div>';
+  if (typeof moon !== 'undefined') {
+    out += '<div class="datetext '+moon.phase+'">&nbsp;</div>';
   } else {
-    out += '<div class="datetext '+m.phase+'">&nbsp;</div>';
+    out += '<div class="datetext">'+date.getDate()+'</div>';
   }
 
-  var a = _.find(MOONS[date.getFullYear()].astro, function(d){ return d.date === isodate; });
-  if (typeof a !== 'undefined') {
-    out += '<div class="astro '+a.phase+'">&nbsp;</div>';
+  if (typeof astro !== 'undefined') {
+    out += '<div class="astro '+astro.phase+'">&nbsp;</div>';
   }
 
-  //var n = _.find(NOTES['mahanikaya'][date.getFullYear()], function(d){ return d.date === isodate; });
-  //if (typeof n !== 'undefined') {
-  //  out += '<div class="notes">'+n.note+'</div>';
-  //}
+  if (typeof major !== 'undefined') {
+    out += '<div class="major">'+major.text+'</div>';
+  }
 
-  //if (typeof m !== 'undefined') {
-  //  if (m.phase === 'full') {
-  //    out += '<div class="season">15th Hemanta n/m</div>';
-  //  } else if (m.phase === 'new') {
-  //    // TODO
-  //  }
-  //}
+  if (typeof moon !== 'undefined' && typeof moon.season !== 'undefined') {
+    out += '<div class="season">'+moon.season;
+    if (typeof moon.catudassi !== 'undefined' && moon.catudassi ) {
+     out += '<br/>Cātudassī</div>';
+    }
+  }
 
   return out;
 }
@@ -104,21 +108,44 @@ function dateTextListItem(date) {
   var out = '';
   var isodate = date.toISOString().substr(0, 10);
 
-  out += '<span class="date">'+monthNamesShort[date.getMonth()]+' '+date.getDate()+'</span>';
+  out += '<ul class="datetext">';
+
+  if (date.getDay() === 0) {
+    out += '<li class="weekday">'+weekdayNamesShort[6]+'</li>';
+  } else {
+    out += '<li class="weekday">'+weekdayNamesShort[date.getDay()-1]+'</li>';
+  }
+  out += '<li class="date">'+monthNamesShort[date.getMonth()]+' '+date.getDate()+'</li>';
 
   if (typeof MOONS[date.getFullYear()] === 'undefined') {
-    return out;
+    return out + '</ul>';
   }
 
-  var m = _.find(MOONS[date.getFullYear()].mahanikaya, function(d){ return d.date === isodate; });
-  if (typeof m !== 'undefined') {
-    out += '<span class="phase">'+m.phase+'</span>';
+  var moon = _.find(MOONS[date.getFullYear()].mahanikaya.phases, function(d){ return d.date === isodate; });
+  var astro = _.find(MOONS[date.getFullYear()].astro.phases, function(d){ return d.date === isodate; });
+  var major = _.find(MOONS[date.getFullYear()].mahanikaya.major, function(d){ return d.date === isodate; });
+
+  if (typeof moon !== 'undefined') {
+    out += '<li class="'+moon.phase+'">&nbsp;</li>';
   }
 
-  var a = _.find(MOONS[date.getFullYear()].astro, function(d){ return d.date === isodate; });
-  if (typeof a !== 'undefined') {
-    out += '<span class="phase">'+a.phase+' (a)</span>';
+  if (typeof astro !== 'undefined') {
+    out += '<li class="astro '+astro.phase+'">&nbsp;</li>';
   }
+
+  if (typeof major !== 'undefined') {
+    out += '<li class="major">'+major.text+'</li>';
+  }
+
+  if (typeof moon !== 'undefined' && typeof moon.season !== 'undefined') {
+    out += '<li class="season">'+moon.season;
+    if (typeof moon.catudassi !== 'undefined' && moon.catudassi ) {
+     out += ' Cātudassī';
+    }
+    out += '</li>';
+  }
+
+  out += '</ul>';
 
   return out;
 }

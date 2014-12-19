@@ -117,6 +117,7 @@ p.site-subtitle
         border: none
         text-align: center
       th
+        font-size: 0.8em
         color: $medium-gray
 
 .month_wrap
@@ -146,6 +147,10 @@ p.site-subtitle
 div.datetext
   font-size: 1em
 
+ul.datetext > li
+  display: inline-block
+  padding: 0.2em 0.5em
+
 div.new,
 div.waxing,
 div.full,
@@ -155,19 +160,51 @@ div.waning,
   background-position: 50% 50%
   background-size: 25px
 
-div.new
+li.new,
+li.waxing,
+li.full,
+li.waning,
+  background-repeat: no-repeat
+  background-position: 50% 50%
+  background-size: 1em
+
+div.new,
+li.new
   background-image: inline-image('moon-new.svg')
-div.waxing
+div.waxing,
+li.waxing
   background-image: inline-image('moon-waxing.svg')
-div.full
+div.full,
+li.full
   background-image: inline-image('moon-full.svg')
-div.waning
+div.waning,
+li.waning
   background-image: inline-image('moon-waning.svg')
 
 div.astro
   height: 14px
   background-position: 70% 50%
   background-size: 10px
+
+div.major
+  font-size: 0.8em
+  font-weight: bold
+  color: white
+  background-color: $dark-blue
+  +border-radius(2px)
+
+li.astro
+  background-position: 50% 50%
+  background-size: 10px
+
+li.date
+  font-size: 0.8em
+
+li.weekday
+  width: 3em
+  font-size: 0.8em
+  font-weight: bold
+  color: $medium-gray
 
 div.notes
   font-size: 0.8em
@@ -193,3 +230,4 @@ button, select, label
   padding: 0
   @include media($medium-screen)
     padding: 0
+
