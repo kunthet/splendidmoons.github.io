@@ -376,6 +376,8 @@ App.Router = Backbone.Router.extend({
     $('#calendar_message').html('');
 
     if (typeof MOONS[App.config.year] !== 'undefined') {
+      $("#calendar").removeClass('nodata');
+
       var messages = [];
       if (MOONS[App.config.year].mahanikaya.properties.status !== 'confirmed') {
         switch(MOONS[App.config.year].mahanikaya.properties.status) {
@@ -395,6 +397,8 @@ App.Router = Backbone.Router.extend({
       for (i=0; i<messages.length; i++) {
         $('#calendar_message').append(new App.Views.CalendarMessage(messages[i][0]).render(messages[i][1]).el);
       }
+    } else {
+      $("#calendar").addClass('nodata');
     }
 
     var view = (App.config.listView === true) ? 'List' : 'Table';
