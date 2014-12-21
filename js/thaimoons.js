@@ -70,17 +70,20 @@ var tpl = {
 
 // === Helpers ===
 
-function dateText(date) {
+function dateTd(date) {
   var out = '';
   var isodate = date.toISOString().substr(0, 10);
+
+  var moon = _.find(MOONS[date.getFullYear()].mahanikaya.phases, function(d){ return d.date === isodate; });
+  var astro = _.find(MOONS[date.getFullYear()].astro.phases, function(d){ return d.date === isodate; });
+  var major = _.find(MOONS[date.getFullYear()].mahanikaya.major, function(d){ return d.date === isodate; });
+
+  out += '<td>';
 
   if (typeof MOONS[date.getFullYear()] === 'undefined') {
     return '<div class="datetext">'+date.getDate()+'</div>';
   }
 
-  var moon = _.find(MOONS[date.getFullYear()].mahanikaya.phases, function(d){ return d.date === isodate; });
-  var astro = _.find(MOONS[date.getFullYear()].astro.phases, function(d){ return d.date === isodate; });
-  var major = _.find(MOONS[date.getFullYear()].mahanikaya.major, function(d){ return d.date === isodate; });
 
   if (typeof moon !== 'undefined') {
     out += '<div class="datetext '+moon.phase+'">&nbsp;</div>';
@@ -103,12 +106,16 @@ function dateText(date) {
     }
   }
 
+  out += '</td>';
+
   return out;
 }
 
-function dateTextListItem(date) {
+function dateLi(date) {
   var out = '';
   var isodate = date.toISOString().substr(0, 10);
+
+  out += '<li>';
 
   out += '<ul class="datetext">';
 
@@ -148,6 +155,7 @@ function dateTextListItem(date) {
   }
 
   out += '</ul>';
+  out += '</li>';
 
   return out;
 }
@@ -187,7 +195,7 @@ function calendarMonthTable(year, month) {
   }
 
   for (i=0; i<7-empties; i++) {
-    out += '<td>'+dateText(d)+'</td>';
+    out += dateTd(d);
     d.setDate(d.getDate()+1);
   }
 
@@ -202,7 +210,7 @@ function calendarMonthTable(year, month) {
     out += '<tr>';
     for (i=0; i<7; i++) {
       d.setDate(d.getDate()+1);
-      out += '<td>'+dateText(d)+'</td>';
+      out += dateTd(d);
     }
     out += '</tr>';
   }
@@ -215,7 +223,7 @@ function calendarMonthTable(year, month) {
     for (i=0; i<7; i++) {
       if (i<7-empties) {
         d.setDate(d.getDate()+1);
-        out += '<td>'+dateText(d)+'</td>';
+        out += dateTd(d);
       } else {
         out += '<td></td>';
       }
@@ -245,7 +253,7 @@ function calendarMonthList(year, month) {
   d.setDate(d.getDate()-1);
   while (d < monthEnd) {
     d.setDate(d.getDate()+1);
-    out += '<li>'+dateTextListItem(d)+'</li>';
+    out += dateLi(d);
   }
 
   out += "</ul>";
