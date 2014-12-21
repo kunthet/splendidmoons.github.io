@@ -373,15 +373,28 @@ App.Router = Backbone.Router.extend({
   },
 
   calendarDoRender: function() {
-    if (typeof MOONS[App.config.year] !== 'undefined' && MOONS[App.config.year].mahanikaya.properties.status !== 'confirmed') {
-      var message = "";
-      switch(MOONS[App.config.year].mahanikaya.properties.status) {
-        case 'provisional':
-          var message = "Provisional uposatha dates";
+    $('#calendar_message').html('');
+
+    if (typeof MOONS[App.config.year] !== 'undefined') {
+      var messages = [];
+      if (MOONS[App.config.year].mahanikaya.properties.status !== 'confirmed') {
+        switch(MOONS[App.config.year].mahanikaya.properties.status) {
+          case 'provisional':
+            messages.push([ 'flash-info', "Provisional uposatha dates" ]);
+        }
       }
-      $('#calendar_message').html(new App.Views.CalendarMessage('flash-info').render(message).el);
-    } else {
-      $('#calendar_message').html('');
+
+      if (MOONS[App.config.year].mahanikaya.properties.adhikamasa === true) {
+        messages.push([ 'flash-info', App.config.year+" has an adhikamāsa extra month." ]);
+      }
+
+      if (MOONS[App.config.year].mahanikaya.properties.adhikavara === true) {
+        messages.push([ 'flash-info', App.config.year+" has an adhikavāra extra day." ]);
+      }
+
+      for (i=0; i<messages.length; i++) {
+        $('#calendar_message').append(new App.Views.CalendarMessage(messages[i][0]).render(messages[i][1]).el);
+      }
     }
 
     var view = (App.config.listView === true) ? 'List' : 'Table';
