@@ -11,6 +11,8 @@ phaseNames['waxing'] = 'Waxing Moon';
 phaseNames['full'] = 'Full Moon';
 phaseNames['waning'] = 'Waning Moon';
 
+var MOONS = [];
+
 var today = new Date();
 var year = today.getFullYear();
 var month = today.getMonth();
@@ -334,9 +336,9 @@ App.Views.Calendar = Backbone.View.extend({
     var html = "";
     if (App.config.period === 'Month') {
       if (this.view === 'Table') {
-       html = calendarMonthTable(App.config.year, App.config.month);
+        html = calendarMonthTable(App.config.year, App.config.month);
       } else {
-       html = calendarMonthList(App.config.year, App.config.month);
+        html = calendarMonthList(App.config.year, App.config.month);
       }
     } else {
       if (this.view === 'Table') {
@@ -370,14 +372,11 @@ App.Router = Backbone.Router.extend({
     this.navigate('calendar/'+App.config.year+'/'+App.config.month, { trigger: true });
   },
 
-  calendarRender: function() {
-    $('#calendar_nav').html(new App.Views.CalendarNav().render(App.config).el);
-
-    if (typeof MOONS[App.config.year] !== 'undefined' && MOONS[App.config.year].status !== 'confirmed') {
+  calendarDoRender: function() {
+    if (typeof MOONS[App.config.year] !== 'undefined' && MOONS[App.config.year].mahanikaya.properties.status !== 'confirmed') {
       var message = "";
-      switch(MOONS[App.config.year].status) {
+      switch(MOONS[App.config.year].mahanikaya.properties.status) {
         case 'provisional':
-        default:
           var message = "Provisional uposatha dates";
       }
       $('#calendar_message').html(new App.Views.CalendarMessage('flash-info').render(message).el);
@@ -395,6 +394,26 @@ App.Router = Backbone.Router.extend({
     $('#calendar_period > ul > li.month > label > span.next').parent().click(function(){ that.nextMonth(); });
     $('input:checkbox[name=list_view]').change(function(){ that.listViewChanged($(this)); });
     $('input:radio[name=period]').change(function(){ that.periodChanged($(this)); });
+  },
+
+  calendarRender: function() {
+    $('#calendar_nav').html(new App.Views.CalendarNav().render(App.config).el);
+
+    if (typeof MOONS[App.config.year] === 'undefined') {
+      var that = this;
+      $.ajax({
+        url: '/data/moons-'+App.config.year+'.json',
+        success: function(data) {
+          MOONS[App.config.year] = data;
+        },
+        complete: function() {
+          that.calendarDoRender();
+        },
+        dataType: 'json',
+      });
+    } else {
+      this.calendarDoRender();
+    }
   },
 
   calendarMonth: function(year, month) {
