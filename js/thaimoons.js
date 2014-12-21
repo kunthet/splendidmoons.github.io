@@ -73,12 +73,23 @@ var tpl = {
 function dateTd(date) {
   var out = '';
   var isodate = date.toISOString().substr(0, 10);
+  var today = new Date();
 
   var moon = _.find(MOONS[date.getFullYear()].mahanikaya.phases, function(d){ return d.date === isodate; });
   var astro = _.find(MOONS[date.getFullYear()].astro.phases, function(d){ return d.date === isodate; });
   var major = _.find(MOONS[date.getFullYear()].mahanikaya.major, function(d){ return d.date === isodate; });
 
-  out += '<td>';
+  var tdclasses = [];
+
+  if (isodate === today.toISOString().substr(0, 10)) {
+    tdclasses.push('today');
+  }
+
+  if (tdclasses.length > 0) {
+    out += '<td class="'+tdclasses.join(' ')+'">';
+  } else {
+    out += '<td>';
+  }
 
   if (typeof MOONS[date.getFullYear()] === 'undefined') {
     return '<div class="datetext">'+date.getDate()+'</div>';
