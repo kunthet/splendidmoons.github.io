@@ -20,15 +20,13 @@ month++;
 
 var App = {
   // TODO: persist this with LocalStore
-  // TODO: override with local config
   config: {
-    year: year,
-    month: month,
-    listView: false,
-    showLogo: true,
-    showSiteTitle: true,
-    showMenu: true,
-    //nikaya: 'mahanikaya',
+    year: App.config.year || year,
+    month: App.config.month || month,
+    listView: App.config.listView || false,
+    showLogo: App.config.showLogo || false,
+    showSiteTitle: App.config.showSiteTitle || false,
+    showMenu: App.config.showMenu || true,
   },
 
   Views: {},
@@ -75,10 +73,6 @@ function dateTd(date) {
   var isodate = date.toISOString().substr(0, 10);
   var today = new Date();
 
-  var moon = _.find(MOONS[date.getFullYear()].mahanikaya.phases, function(d){ return d.date === isodate; });
-  var astro = _.find(MOONS[date.getFullYear()].astro.phases, function(d){ return d.date === isodate; });
-  var major = _.find(MOONS[date.getFullYear()].mahanikaya.major, function(d){ return d.date === isodate; });
-
   var tdclasses = [];
 
   if (isodate === today.toISOString().substr(0, 10)) {
@@ -92,9 +86,12 @@ function dateTd(date) {
   }
 
   if (typeof MOONS[date.getFullYear()] === 'undefined') {
-    return '<div class="datetext">'+date.getDate()+'</div>';
+    return out+'<div class="datetext">'+date.getDate()+'</div></td>';
   }
 
+  var moon = _.find(MOONS[date.getFullYear()].mahanikaya.phases, function(d){ return d.date === isodate; });
+  var astro = _.find(MOONS[date.getFullYear()].astro.phases, function(d){ return d.date === isodate; });
+  var major = _.find(MOONS[date.getFullYear()].mahanikaya.major, function(d){ return d.date === isodate; });
 
   if (typeof moon !== 'undefined') {
     out += '<div class="datetext '+moon.phase+'">&nbsp;</div>';
@@ -282,7 +279,7 @@ function calendarYearTable(year) {
       omega = ' omega';
       out += "<section>";
     }
-    out += "<div class='month_wrap"+omega+"'>";
+    out += "<div class='yeartable_month_wrap"+omega+"'>";
     out += "<h3>"+monthNames[month-1]+"</h3>";
     out += calendarMonthTable(year, month);
     out += "</div>";
@@ -305,7 +302,7 @@ function calendarYearList(year) {
       omega = ' omega';
       out += "<section>";
     }
-    out += "<div class='month_wrap"+omega+"'>";
+    out += "<div class='yearlist_month_wrap"+omega+"'>";
     out += "<h3>"+monthNames[month-1]+"</h3>";
     out += calendarMonthList(year, month);
     out += "</div>";
@@ -405,6 +402,7 @@ App.Router = Backbone.Router.extend({
         }
       }
 
+      /* TODO: find a less obtrusive way to display these.
       if (MOONS[App.config.year].mahanikaya.properties.adhikamasa === true) {
         messages.push([ 'flash-info', App.config.year+" has an adhikamāsa extra month." ]);
       }
@@ -412,6 +410,7 @@ App.Router = Backbone.Router.extend({
       if (MOONS[App.config.year].mahanikaya.properties.adhikavara === true) {
         messages.push([ 'flash-info', App.config.year+" has an adhikavāra extra day." ]);
       }
+      */
 
       for (i=0; i<messages.length; i++) {
         $('#calendar_message').append(new App.Views.CalendarMessage(messages[i][0]).render(messages[i][1]).el);
@@ -421,6 +420,7 @@ App.Router = Backbone.Router.extend({
     }
 
     var view = (App.config.listView === true) ? 'List' : 'Table';
+    // TODO: it adds an extra div as the default el
     $('#calendar').html(new App.Views.Calendar(view).render(App.config).el);
 
     var that = this;

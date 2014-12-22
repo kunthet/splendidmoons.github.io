@@ -116,23 +116,39 @@ p.site-subtitle
   #calendar
     width: 100%
     table
+      thead
+        background-color: $medium-gray
+        color: white
+        font-size: 0.8em
+        transform: uppercase
       th, td
         border: none
         text-align: center
+      th
+        padding-top: 0.2em
+        padding-bottom: 0.2em
       /* Not highlighting today for now. */
       //td.today
       //  border: 1px solid $dark-blue
-      th
-        font-size: 0.8em
-        color: $medium-gray
 
-.month_wrap
+.yeartable_month_wrap,
+.yearlist_month_wrap
   @include span-columns(4)
   h3
     text-align: center
     font-size: 1.2em
     font-weight: normal
     color: $dark-gray
+
+.yeartable_month_wrap
+  .datetext
+    &.new,
+    &.waxing,
+    &.full,
+    &.waning
+      background-size: 20px
+  .astro
+    background-position: 85% 50%
 
 #calendar_message
   @include span-columns(4)
