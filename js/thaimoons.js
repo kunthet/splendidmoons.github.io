@@ -511,16 +511,14 @@ App.Router = Backbone.Router.extend({
   keyNav: function(e) {
     if (App.config.period === 'Month') {
       switch (e.keyCode) {
-        // left, up, k
+        // left, k
         case 37:
-        case 38:
         case 75:
           this.prevMonth();
           break;
 
-        // right, down, j
+        // right, j
         case 39:
-        case 40:
         case 74:
           this.nextMonth();
           break;
@@ -531,16 +529,14 @@ App.Router = Backbone.Router.extend({
       }
     } else {
       switch (e.keyCode) {
-        // left, up, k
+        // left, k
         case 37:
-        case 38:
         case 75:
           this.prevYear();
           break;
 
-        // right, down, j
+        // right, j
         case 39:
-        case 40:
         case 74:
           this.nextYear();
           break;
