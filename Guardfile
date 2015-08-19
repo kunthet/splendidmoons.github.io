@@ -28,3 +28,5 @@ guard :compass
 guard :haml, notifications: false do
   watch(/^.+(\.html\.haml)$/)
 end
+
+notification :off

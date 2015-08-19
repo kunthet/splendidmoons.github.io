@@ -1,5 +1,3 @@
-// vim: foldmethod=indent foldlevel=0
-
 // Some useful data
 
 var monthNames = [ 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December' ];
@@ -51,7 +49,7 @@ var tpl = {
         afterSuccessCallback();
       },
       error: function() {
-        $('#thaimoons').html("<div class='flash-error'><span>Error: can't retreive templates.</span></div>");
+        $('#splendidmoons').html("<div class='flash-error'><span>Error: can't retreive templates.</span></div>");
       },
     });
   },
@@ -380,8 +378,8 @@ App.Router = Backbone.Router.extend({
   initialize: function() {
     App.config.period = 'Month';
     this.template = _.template(tpl.get('appview'));
-    $('#thaimoons').html(this.template(App.config));
-    $('#thaimoons > nav li.print').click(function(e){ e.preventDefault(); window.print(); });
+    $('#splendidmoons').html(this.template(App.config));
+    $('#splendidmoons > nav li.print').click(function(e){ e.preventDefault(); window.print(); });
   },
 
   index: function() {
