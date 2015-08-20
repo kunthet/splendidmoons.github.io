@@ -1,5 +1,5 @@
 
-# Thai Moons
+# Splendid Moons
 
 Uposatha Moonday Calendar
 

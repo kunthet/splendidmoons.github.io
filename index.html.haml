@@ -3,20 +3,16 @@
   %head
     %meta{:content => "text/html; charset=utf-8", "http-equiv" => "Content-Type"}/
     %title Splendid Moons
-    %link{:href => "/css/splendidmoons.css", :rel => "stylesheet", :type => "text/css"}/
 
   %body
     #splendidmoons
 
-    %script{:src => '/js/vendor/json2.js' }
     %script{:src => '/js/vendor/jquery-2.1.4.min.js' }
-    %script{:src => '/js/vendor/underscore-1.8.3.min.js' }
-    %script{:src => '/js/vendor/backbone-1.2.1.min.js' }
     :javascript
-      var App = {
+      var SplendidMoons = {
         config: {
           showLogo: true,
           showSiteTitle: true,
         }
       };
-    %script{:src => '/js/splendidmoons.js' }
+    %script{:src => '/splendidmoons.min.js' }

@@ -1,3 +1,16 @@
+
+var CSS_DATA = "/* === js template split === */";
+CSS_DATA = Base64.decode(CSS_DATA);
+
+var TEMPLATES_DATA = "/* === js template split === */";
+TEMPLATES_DATA = Base64.decode(TEMPLATES_DATA);
+
+var MOONS_DATA = "/* === js template split === */";
+MOONS_DATA = Base64.decode(MOONS_DATA);
+
+var MOONS = [];
+MOONS[2015] = JSON.parse(MOONS_DATA);
+
 // Some useful data
 
 var monthNames = [ 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December' ];
@@ -9,25 +22,23 @@ phaseNames['waxing'] = 'Waxing Moon';
 phaseNames['full'] = 'Full Moon';
 phaseNames['waning'] = 'Waning Moon';
 
-var MOONS = [];
-
 var today = new Date();
 var year = today.getFullYear();
 var month = today.getMonth();
 month++;
 
-var App = {
+var SplendidMoons = {
   // TODO: persist this with LocalStore
   config: {
-    year: App.config.year || year,
-    month: App.config.month || month,
-    listView: App.config.listView || false,
-    showLogo: App.config.showLogo || false,
-    showSiteTitle: App.config.showSiteTitle || false,
-    showMenu: App.config.showMenu || true,
+    year: SplendidMoons.config.year || year,
+    month: SplendidMoons.config.month || month,
+    listView: SplendidMoons.config.listView || false,
+    showLogo: SplendidMoons.config.showLogo || false,
+    showSiteTitle: SplendidMoons.config.showSiteTitle || false,
+    showMenu: SplendidMoons.config.showMenu || true
   },
 
-  Views: {},
+  Views: {}
 };
 
 // === Templates ===
@@ -36,6 +47,7 @@ var tpl = {
   templates: {},
 
   // TODO: couldn't afterSuccessCallback be replaced with a deferred?
+  /*
   loadTemplates: function(afterSuccessCallback) {
     var that = this;
     $.ajax({
@@ -53,6 +65,18 @@ var tpl = {
       },
     });
   },
+  */
+
+  loadTemplates: function(afterSuccessCallback) {
+    var that = this;
+    $('head').append("<style>" + CSS_DATA + "</style>");
+    $('body').append(TEMPLATES_DATA);
+    $("script[id$='-template']").each(function(){
+        var name = $(this).attr('id').replace(/-template$/, '');
+        that.templates[name] = $(this).html();
+    });
+    afterSuccessCallback();
+  },
 
   get: function(name) {
     var ret = this.templates[name];
@@ -61,8 +85,8 @@ var tpl = {
     } else {
       return "<span>Missing template: "+name+"</span>";
     }
-  },
-}
+  }
+};
 
 // === Helpers ===
 
@@ -169,10 +193,11 @@ function dateLi(date) {
 function calendarMonthTable(year, month) {
   month--;
   var monthStart = new Date(year, month, 1);
+  var monthEnd;
   if (month < 11) {
-    var monthEnd = new Date(year, month+1, 0);
+    monthEnd = new Date(year, month+1, 0);
   } else {
-    var monthEnd = new Date(year+1, 0, 0);
+    monthEnd = new Date(year+1, 0, 0);
   }
 
   var out = "";
@@ -190,10 +215,11 @@ function calendarMonthTable(year, month) {
   // first row with empties until month begins
 
   out += '<tr>';
+  var empties;
   if (monthStart.getDay() === 0) {
-    var empties = 6;
+    empties = 6;
   } else {
-    var empties = monthStart.getDay()-1;
+    empties = monthStart.getDay()-1;
   }
 
   for (i=0; i<empties; i++) {
@@ -245,10 +271,11 @@ function calendarMonthTable(year, month) {
 function calendarMonthList(year, month) {
   month--;
   var monthStart = new Date(year, month, 1);
+  var monthEnd;
   if (month < 11) {
-    var monthEnd = new Date(year, month+1, 0);
+    monthEnd = new Date(year, month+1, 0);
   } else {
-    var monthEnd = new Date(year+1, 0, 0);
+    monthEnd = new Date(year+1, 0, 0);
   }
 
   var out = "";
@@ -314,7 +341,7 @@ function calendarYearList(year) {
 
 // === Views ===
 
-App.Views.CalendarNav = Backbone.View.extend({
+SplendidMoons.Views.CalendarNav = Backbone.View.extend({
   initialize: function() {
     this.template = _.template(tpl.get('calendarNav'));
   },
@@ -331,7 +358,7 @@ App.Views.CalendarNav = Backbone.View.extend({
   },
 });
 
-App.Views.CalendarMessage = Backbone.View.extend({
+SplendidMoons.Views.CalendarMessage = Backbone.View.extend({
   initialize: function(type) {
     this.template = _.template(tpl.get(type));
   },
@@ -342,23 +369,23 @@ App.Views.CalendarMessage = Backbone.View.extend({
   },
 });
 
-App.Views.Calendar = Backbone.View.extend({
+SplendidMoons.Views.Calendar = Backbone.View.extend({
   initialize: function(view) {
     this.view = view;
   },
   render: function(data) {
     var html = "";
-    if (App.config.period === 'Month') {
+    if (SplendidMoons.config.period === 'Month') {
       if (this.view === 'Table') {
-        html = calendarMonthTable(App.config.year, App.config.month);
+        html = calendarMonthTable(SplendidMoons.config.year, SplendidMoons.config.month);
       } else {
-        html = calendarMonthList(App.config.year, App.config.month);
+        html = calendarMonthList(SplendidMoons.config.year, SplendidMoons.config.month);
       }
     } else {
       if (this.view === 'Table') {
-       html = calendarYearTable(App.config.year);
+       html = calendarYearTable(SplendidMoons.config.year);
       } else {
-       html = calendarYearList(App.config.year);
+       html = calendarYearList(SplendidMoons.config.year);
       }
     }
     this.$el.html(html);
@@ -368,7 +395,7 @@ App.Views.Calendar = Backbone.View.extend({
 
 // === Router ===
 
-App.Router = Backbone.Router.extend({
+SplendidMoons.Router = Backbone.Router.extend({
   routes: {
     "": "index",
     "calendar/:year/:month": "calendarMonth",
@@ -376,50 +403,50 @@ App.Router = Backbone.Router.extend({
   },
 
   initialize: function() {
-    App.config.period = 'Month';
+    SplendidMoons.config.period = 'Month';
     this.template = _.template(tpl.get('appview'));
-    $('#splendidmoons').html(this.template(App.config));
+    $('#splendidmoons').html(this.template(SplendidMoons.config));
     $('#splendidmoons > nav li.print').click(function(e){ e.preventDefault(); window.print(); });
   },
 
   index: function() {
-    this.navigate('calendar/'+App.config.year+'/'+App.config.month, { trigger: true });
+    this.navigate('calendar/'+SplendidMoons.config.year+'/'+SplendidMoons.config.month, { trigger: true });
   },
 
   calendarDoRender: function() {
     $('#calendar_message').html('');
 
-    if (typeof MOONS[App.config.year] !== 'undefined') {
+    if (typeof MOONS[SplendidMoons.config.year] !== 'undefined') {
       $("#calendar").removeClass('nodata');
 
       var messages = [];
-      if (MOONS[App.config.year].mahanikaya.properties.status !== 'confirmed') {
-        switch(MOONS[App.config.year].mahanikaya.properties.status) {
+      if (MOONS[SplendidMoons.config.year].mahanikaya.properties.status !== 'confirmed') {
+        switch(MOONS[SplendidMoons.config.year].mahanikaya.properties.status) {
           case 'provisional':
             messages.push([ 'flash-info', "Provisional uposatha dates" ]);
         }
       }
 
       /* TODO: find a less obtrusive way to display these.
-      if (MOONS[App.config.year].mahanikaya.properties.adhikamasa === true) {
-        messages.push([ 'flash-info', App.config.year+" has an adhikamāsa extra month." ]);
+      if (MOONS[SplendidMoons.config.year].mahanikaya.properties.adhikamasa === true) {
+        messages.push([ 'flash-info', SplendidMoons.config.year+" has an adhikamāsa extra month." ]);
       }
 
-      if (MOONS[App.config.year].mahanikaya.properties.adhikavara === true) {
-        messages.push([ 'flash-info', App.config.year+" has an adhikavāra extra day." ]);
+      if (MOONS[SplendidMoons.config.year].mahanikaya.properties.adhikavara === true) {
+        messages.push([ 'flash-info', SplendidMoons.config.year+" has an adhikavāra extra day." ]);
       }
       */
 
       for (i=0; i<messages.length; i++) {
-        $('#calendar_message').append(new App.Views.CalendarMessage(messages[i][0]).render(messages[i][1]).el);
+        $('#calendar_message').append(new SplendidMoons.Views.CalendarMessage(messages[i][0]).render(messages[i][1]).el);
       }
     } else {
       $("#calendar").addClass('nodata');
     }
 
-    var view = (App.config.listView === true) ? 'List' : 'Table';
+    var view = (SplendidMoons.config.listView === true) ? 'List' : 'Table';
     // TODO: it adds an extra div as the default el
-    $('#calendar').html(new App.Views.Calendar(view).render(App.config).el);
+    $('#calendar').html(new SplendidMoons.Views.Calendar(view).render(SplendidMoons.config).el);
 
     var that = this;
     $('#calendar_period > ul > li.year > label > span.prev').parent().click(function(){ that.prevYear(); });
@@ -431,14 +458,14 @@ App.Router = Backbone.Router.extend({
   },
 
   calendarRender: function() {
-    $('#calendar_nav').html(new App.Views.CalendarNav().render(App.config).el);
+    $('#calendar_nav').html(new SplendidMoons.Views.CalendarNav().render(SplendidMoons.config).el);
 
-    if (typeof MOONS[App.config.year] === 'undefined') {
+    if (typeof MOONS[SplendidMoons.config.year] === 'undefined') {
       var that = this;
       $.ajax({
-        url: '/data/moons-'+App.config.year+'.json',
+        url: '/data/moons-'+SplendidMoons.config.year+'.json',
         success: function(data) {
-          MOONS[App.config.year] = data;
+          MOONS[SplendidMoons.config.year] = data;
         },
         complete: function() {
           that.calendarDoRender();
@@ -451,63 +478,63 @@ App.Router = Backbone.Router.extend({
   },
 
   calendarMonth: function(year, month) {
-    if (typeof year !== 'number') { year = new Number(year); }
-    if (typeof month !== 'number') { month = new Number(month); }
-    App.config.year = year;
-    App.config.month = month;
-    App.config.period = 'Month';
+    if (typeof year !== 'number') { year = Number(year); }
+    if (typeof month !== 'number') { month = Number(month); }
+    SplendidMoons.config.year = year;
+    SplendidMoons.config.month = month;
+    SplendidMoons.config.period = 'Month';
     this.calendarRender();
   },
 
   calendarYear: function(year) {
-    if (typeof year !== 'number') { year = new Number(year); }
-    App.config.year = year;
-    App.config.period = 'Year';
+    if (typeof year !== 'number') { year = Number(year); }
+    SplendidMoons.config.year = year;
+    SplendidMoons.config.period = 'Year';
     this.calendarRender();
   },
 
   listViewChanged: function(obj) {
-    App.config.listView = obj.prop('checked');
+    SplendidMoons.config.listView = obj.prop('checked');
     this.calendarRender();
   },
 
   periodChanged: function(obj) {
-    App.config.period = obj.val();
+    SplendidMoons.config.period = obj.val();
     this.calendarRender();
   },
 
   go: function() {
-    if (App.config.period === 'Month') {
-      this.navigate('calendar/'+App.config.year+'/'+App.config.month, { trigger: true, replace: true });
+    if (SplendidMoons.config.period === 'Month') {
+      this.navigate('calendar/'+SplendidMoons.config.year+'/'+SplendidMoons.config.month, { trigger: true, replace: true });
     } else {
-      this.navigate('calendar/'+App.config.year, { trigger: true, replace: true });
+      this.navigate('calendar/'+SplendidMoons.config.year, { trigger: true, replace: true });
     }
   },
 
   prevYear: function() {
-    App.config.year--;
+    SplendidMoons.config.year--;
     this.go();
   },
 
   nextYear: function() {
-    App.config.year++;
+    SplendidMoons.config.year++;
     this.go();
   },
 
   prevMonth: function() {
-    App.config.month--;
-    if (App.config.month < 1) { App.config.year--; App.config.month = 12; }
+    SplendidMoons.config.month--;
+    if (SplendidMoons.config.month < 1) { SplendidMoons.config.year--; SplendidMoons.config.month = 12; }
     this.go();
   },
 
   nextMonth: function() {
-    App.config.month++;
-    if (App.config.month > 12) { App.config.year++; App.config.month = 1; }
+    SplendidMoons.config.month++;
+    if (SplendidMoons.config.month > 12) { SplendidMoons.config.year++; SplendidMoons.config.month = 1; }
     this.go();
   },
 
   keyNav: function(e) {
-    if (App.config.period === 'Month') {
+    if (SplendidMoons.config.period === 'Month') {
       switch (e.keyCode) {
         // left, k
         case 37:
@@ -550,10 +577,10 @@ App.Router = Backbone.Router.extend({
 // === It lives! ===
 
 tpl.loadTemplates(function(){
-  App.theRouter = new App.Router;
+  SplendidMoons.theRouter = new SplendidMoons.Router();
   Backbone.history.start();
 
-  $('body').keydown(function(e){ App.theRouter.keyNav(e); });
+  $('body').keydown(function(e){ SplendidMoons.theRouter.keyNav(e); });
 
   // refills/vertical_tabs.js
 
