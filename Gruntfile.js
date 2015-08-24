@@ -7,7 +7,7 @@ module.exports = function(grunt) {
 
     var css_data = Base64.encode(grunt.file.read('./css/splendidmoons.css'));
     var templates_data = Base64.encode(grunt.file.read('./templates.html'));
-    var moons_data = Base64.encode(grunt.file.read('./data/moons-2015.json'));
+    var days_data = Base64.encode(grunt.file.read('./data/days.json'));
 
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
@@ -17,7 +17,7 @@ module.exports = function(grunt) {
 				        options: {
 					          stripbanners: true,
                     separator: ';\n',
-                    footer: appjs[0] + css_data + appjs[1] + templates_data + appjs[2] + moons_data + appjs[3]
+                    footer: appjs[0] + css_data + appjs[1] + templates_data + appjs[2] + days_data + appjs[3]
 				        },
 				        src: ['./js/vendor/underscore-1.8.3.min.js', './js/vendor/backbone-1.2.1.min.js', './js/vendor/base64.js'],
 				        dest: './build/splendidmoons.min.js'
@@ -63,7 +63,13 @@ module.exports = function(grunt) {
 
         watch: {
             files: ['<%= jshint.files %>'],
-            tasks: ['jshint']
+            tasks: [
+              //'jshint',
+              //'sass:dist',
+              'concat:dist',
+              'uglify',
+              'clean'
+            ],
         }
 
     });

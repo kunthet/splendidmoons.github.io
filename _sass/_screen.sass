@@ -131,14 +131,26 @@ p.site-subtitle
       //td.today
       //  border: 1px solid $dark-blue
 
+.list_month_wrap
+  +span-columns(4)
+  +shift(4)
+  padding-left: 3.2em
+
 .yeartable_month_wrap,
 .yearlist_month_wrap
-  @include span-columns(4)
+  +span-columns(4)
   h3
     text-align: center
     font-size: 1.2em
     font-weight: normal
     color: $dark-gray
+
+.yearlist_month_wrap
+  margin-bottom: 1em
+  padding-left: 3.2em
+  h3
+    text-decoration: underline
+    margin-bottom: 0.3em
 
 .yeartable_month_wrap
   .datetext
@@ -171,7 +183,17 @@ div.datetext
 
 ul.datetext > li
   display: inline-block
-  padding: 0.2em 0.5em
+  padding: 0.2em 0.5em 0.2em 0
+  &:last-child
+    padding-right: 0
+  &.date
+    padding-right: 0
+  &.moon
+    padding-left: 0.5em
+    padding-right: 0.5em
+    background-repeat: no-repeat
+    background-position: 50% 50%
+    background-size: 1em
 
 div.new,
 div.waxing,
@@ -181,14 +203,6 @@ div.waning,
   background-repeat: no-repeat
   background-position: 50% 50%
   background-size: 25px
-
-li.new,
-li.waxing,
-li.full,
-li.waning,
-  background-repeat: no-repeat
-  background-position: 50% 50%
-  background-size: 1em
 
 div.new,
 li.new
@@ -215,24 +229,35 @@ div.major
   background-color: $dark-blue
   +border-radius(2px)
 
+div.notes
+  font-size: 0.8em
+
+div.season
+  font-size: 0.8em
+
 li.astro
   background-position: 50% 50%
   background-size: 10px
-
-li.date
-  font-size: 0.8em
 
 li.weekday
   width: 3em
   font-size: 0.8em
   font-weight: bold
   color: $medium-gray
+  width: 3.5em
 
-div.notes
+li.date
   font-size: 0.8em
+  width: 4.1em
 
-div.season
+ul.notes
+  display: inline-block
   font-size: 0.8em
+  padding: 0.5em 0 0.5em 0.8em
+  vertical-align: top
+  width: 12em
+  li.major
+    font-weight: bold
 
 select.ui, label.ui
   @extend %button

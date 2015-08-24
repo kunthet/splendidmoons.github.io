@@ -5,11 +5,11 @@ CSS_DATA = Base64.decode(CSS_DATA);
 var TEMPLATES_DATA = "/* === js template split === */";
 TEMPLATES_DATA = Base64.decode(TEMPLATES_DATA);
 
-var MOONS_DATA = "/* === js template split === */";
-MOONS_DATA = Base64.decode(MOONS_DATA);
+var DAYS_DATA = "/* === js template split === */";
+DAYS_DATA = Base64.decode(DAYS_DATA);
 
-var MOONS = [];
-MOONS[2015] = JSON.parse(MOONS_DATA);
+var DAYS = [];
+DAYS = JSON.parse(DAYS_DATA);
 
 // Some useful data
 
@@ -21,6 +21,8 @@ phaseNames['new'] = 'New Moon';
 phaseNames['waxing'] = 'Waxing Moon';
 phaseNames['full'] = 'Full Moon';
 phaseNames['waning'] = 'Waning Moon';
+
+var seasonName = [ "", "Hemanta", "Gimha", "Vassāna" ];
 
 var today = new Date();
 var year = today.getFullYear();
@@ -90,14 +92,39 @@ var tpl = {
 
 // === Helpers ===
 
+// Timezone offset problem:
+// date:               Wed Jul 01 2015 00:00:00 GMT+0100 (WEST)
+// date.toISOString(): 2015-06-30T23:00:00.000Z
+
+Date.prototype.isoShort = function() {
+  var year = this.getFullYear();
+  // January is 0
+  var month = this.getMonth() + 1;
+  if (month < 10) { month = "0" + month; }
+  var date = this.getDate();
+  if (date < 10) { date = "0" + date; }
+  return [ year, month, date ].join("-");
+}
+
+function seasonText(day) {
+  return day.UposathaMoon[0].U_Days +
+    " days, " +
+    seasonName[day.UposathaMoon[0].LunarSeason] +
+    " " +
+    day.UposathaMoon[0].S_Number +
+    "/" +
+    day.UposathaMoon[0].S_Total;
+}
+
 function dateTd(date) {
   var out = '';
-  var isodate = date.toISOString().substr(0, 10);
+
+  var isodate = date.isoShort();
   var today = new Date();
 
   var tdclasses = [];
 
-  if (isodate === today.toISOString().substr(0, 10)) {
+  if (isodate === today.isoShort()) {
     tdclasses.push('today');
   }
 
@@ -107,33 +134,46 @@ function dateTd(date) {
     out += '<td>';
   }
 
-  if (typeof MOONS[date.getFullYear()] === 'undefined') {
+  if (typeof DAYS[date.getFullYear()] === 'undefined') {
     return out+'<div class="datetext">'+date.getDate()+'</div></td>';
   }
 
-  var moon = _.find(MOONS[date.getFullYear()].mahanikaya.phases, function(d){ return d.date === isodate; });
-  var astro = _.find(MOONS[date.getFullYear()].astro.phases, function(d){ return d.date === isodate; });
-  var major = _.find(MOONS[date.getFullYear()].mahanikaya.major, function(d){ return d.date === isodate; });
+  var day = _.find(DAYS[date.getFullYear()], function(d){ return d.Date.substr(0, 10) === isodate; });
 
-  if (typeof moon !== 'undefined') {
-    out += '<div class="datetext '+moon.phase+'">&nbsp;</div>';
-  } else {
+  if (typeof day === 'undefined') {
+    out += '<div class="datetext">'+date.getDate()+'</div>';
+    out += '</td>';
+    return out;
+  }
+
+  var addDateText = true;
+
+  if (typeof day.UposathaMoon !== 'undefined') {
+    addDateText = false;
+    out += '<div class="datetext '+day.UposathaMoon[0].Phase+'">&nbsp;</div>';
+  }
+
+  if (typeof day.HalfMoon !== 'undefined') {
+    addDateText = false;
+    out += '<div class="datetext '+day.HalfMoon[0].Phase+'">&nbsp;</div>';
+  }
+
+  if (addDateText) {
     out += '<div class="datetext">'+date.getDate()+'</div>';
   }
 
-  if (typeof astro !== 'undefined') {
-    out += '<div class="astro '+astro.phase+'">&nbsp;</div>';
+  if (typeof day.AstroMoon !== 'undefined') {
+    out += '<div class="astro '+day.AstroMoon[0].Phase+'">&nbsp;</div>';
   }
 
-  if (typeof major !== 'undefined') {
-    out += '<div class="major">'+major.text+'</div>';
-  }
-
-  if (typeof moon !== 'undefined' && typeof moon.season !== 'undefined') {
-    out += '<div class="season">'+moon.season;
-    if (typeof moon.catudassi !== 'undefined' && moon.catudassi ) {
-     out += '<br/>Cātudassī</div>';
+  if (typeof day.MajorEvents !== 'undefined') {
+    for (var i=0; i<day.MajorEvents.length; i++) {
+      out += '<div class="major">'+day.MajorEvents[i].Summary+'</div>';
     }
+  }
+
+  if (typeof day.UposathaMoon !== 'undefined') {
+    out += '<div class="season">'+seasonText(day)+'</div>';
   }
 
   out += '</td>';
@@ -143,7 +183,31 @@ function dateTd(date) {
 
 function dateLi(date) {
   var out = '';
-  var isodate = date.toISOString().substr(0, 10);
+  var isodate = date.isoShort();
+
+  // Being compact is more useful: only show uposathas and half-moons and major events
+  var day = _.find(DAYS[date.getFullYear()], function(d){
+    var ok = false;
+    if (d.Date.substr(0, 10) === isodate) {
+      if (typeof d.UposathaMoon !== 'undefined') {
+        ok = true;
+      }
+      if (typeof d.HalfMoon !== 'undefined') {
+        ok = true;
+      }
+      if (typeof d.MajorEvents !== 'undefined') {
+        ok = true;
+      }
+    }
+    return ok;
+  });
+
+  // Find any day with information for this date
+  //var day = _.find(DAYS[date.getFullYear()], function(d){ return d.Date.substr(0, 10) === isodate; });
+
+  if (typeof day === 'undefined') {
+    return out;
+  }
 
   out += '<li>';
 
@@ -156,33 +220,43 @@ function dateLi(date) {
   }
   out += '<li class="date">'+monthNamesShort[date.getMonth()]+' '+date.getDate()+'</li>';
 
-  if (typeof MOONS[date.getFullYear()] === 'undefined') {
-    return out + '</ul>';
+  if (typeof DAYS[date.getFullYear()] === 'undefined') {
+    return out + '</ul></li>';
   }
 
-  var moon = _.find(MOONS[date.getFullYear()].mahanikaya.phases, function(d){ return d.date === isodate; });
-  var astro = _.find(MOONS[date.getFullYear()].astro.phases, function(d){ return d.date === isodate; });
-  var major = _.find(MOONS[date.getFullYear()].mahanikaya.major, function(d){ return d.date === isodate; });
+  // at least an empty li.moon for horizontal alignment
+  var classes = ['moon'];
 
-  if (typeof moon !== 'undefined') {
-    out += '<li class="'+moon.phase+'">&nbsp;</li>';
+  if (typeof day.UposathaMoon !== 'undefined') {
+    classes.push(day.UposathaMoon[0].Phase);
   }
 
-  if (typeof astro !== 'undefined') {
-    out += '<li class="astro '+astro.phase+'">&nbsp;</li>';
+  if (typeof day.HalfMoon !== 'undefined') {
+    classes.push(day.HalfMoon[0].Phase);
   }
 
-  if (typeof major !== 'undefined') {
-    out += '<li class="major">'+major.text+'</li>';
-  }
+  out += '<li class="'+classes.join(' ')+'">&nbsp;</li>';
 
-  if (typeof moon !== 'undefined' && typeof moon.season !== 'undefined') {
-    out += '<li class="season">'+moon.season;
-    if (typeof moon.catudassi !== 'undefined' && moon.catudassi ) {
-     out += ' Cātudassī';
+  // NOTE: this confuses the compact list, because we are not showing all astro phases.
+  /*
+  if (typeof day.AstroMoon !== 'undefined') {
+    out += '<li class="astro '+day.AstroMoon[0].Phase+'">&nbsp;</li>';
+  }
+  */
+
+  out += '<ul class="notes">';
+
+  if (typeof day.MajorEvents !== 'undefined') {
+    for (var i=0; i<day.MajorEvents.length; i++) {
+      out += '<li class="major">'+day.MajorEvents[i].Summary+'</li>';
     }
-    out += '</li>';
   }
+
+  if (typeof day.UposathaMoon !== 'undefined') {
+    out += '<li class="season">'+seasonText(day)+'</li>';
+  }
+
+  out += '</ul>';
 
   out += '</ul>';
   out += '</li>';
@@ -193,6 +267,9 @@ function dateLi(date) {
 function calendarMonthTable(year, month) {
   month--;
   var monthStart = new Date(year, month, 1);
+  // new Date with datestring?
+  // Date.parse! returns utc
+  //monthStart.setUTCDate(monthStart);
   var monthEnd;
   if (month < 11) {
     monthEnd = new Date(year, month+1, 0);
@@ -222,6 +299,7 @@ function calendarMonthTable(year, month) {
     empties = monthStart.getDay()-1;
   }
 
+  var i;
   for (i=0; i<empties; i++) {
     out += '<td></td>';
   }
@@ -298,6 +376,7 @@ function calendarYearTable(year) {
   var out = "";
   var omega = "";
 
+  var month;
   for (month = 1; month <= 12; month++) {
     omega = "";
     if (month % 3 === 0) {
@@ -321,6 +400,7 @@ function calendarYearList(year) {
   var out = "";
   var omega = "";
 
+  var month;
   for (month = 1; month <= 12; month++) {
     omega = "";
     if (month % 3 === 0) {
@@ -379,7 +459,7 @@ SplendidMoons.Views.Calendar = Backbone.View.extend({
       if (this.view === 'Table') {
         html = calendarMonthTable(SplendidMoons.config.year, SplendidMoons.config.month);
       } else {
-        html = calendarMonthList(SplendidMoons.config.year, SplendidMoons.config.month);
+        html = "<div class='list_month_wrap'>" + calendarMonthList(SplendidMoons.config.year, SplendidMoons.config.month) + "</div>";
       }
     } else {
       if (this.view === 'Table') {
@@ -399,7 +479,7 @@ SplendidMoons.Router = Backbone.Router.extend({
   routes: {
     "": "index",
     "calendar/:year/:month": "calendarMonth",
-    "calendar/:year": "calendarYear",
+    "calendar/:year": "calendarYear"
   },
 
   initialize: function() {
@@ -416,27 +496,31 @@ SplendidMoons.Router = Backbone.Router.extend({
   calendarDoRender: function() {
     $('#calendar_message').html('');
 
-    if (typeof MOONS[SplendidMoons.config.year] !== 'undefined') {
+    if (typeof DAYS[SplendidMoons.config.year] !== 'undefined') {
       $("#calendar").removeClass('nodata');
 
       var messages = [];
-      if (MOONS[SplendidMoons.config.year].mahanikaya.properties.status !== 'confirmed') {
-        switch(MOONS[SplendidMoons.config.year].mahanikaya.properties.status) {
+      // TODO: display predicted message
+      /*
+      if (DAYS[SplendidMoons.config.year].mahanikaya.properties.status !== 'confirmed') {
+        switch(DAYS[SplendidMoons.config.year].mahanikaya.properties.status) {
           case 'provisional':
             messages.push([ 'flash-info', "Provisional uposatha dates" ]);
         }
       }
+      */
 
       /* TODO: find a less obtrusive way to display these.
-      if (MOONS[SplendidMoons.config.year].mahanikaya.properties.adhikamasa === true) {
+      if (DAYS[SplendidMoons.config.year].mahanikaya.properties.adhikamasa === true) {
         messages.push([ 'flash-info', SplendidMoons.config.year+" has an adhikamāsa extra month." ]);
       }
 
-      if (MOONS[SplendidMoons.config.year].mahanikaya.properties.adhikavara === true) {
+      if (DAYS[SplendidMoons.config.year].mahanikaya.properties.adhikavara === true) {
         messages.push([ 'flash-info', SplendidMoons.config.year+" has an adhikavāra extra day." ]);
       }
       */
 
+      var i;
       for (i=0; i<messages.length; i++) {
         $('#calendar_message').append(new SplendidMoons.Views.CalendarMessage(messages[i][0]).render(messages[i][1]).el);
       }
@@ -460,18 +544,23 @@ SplendidMoons.Router = Backbone.Router.extend({
   calendarRender: function() {
     $('#calendar_nav').html(new SplendidMoons.Views.CalendarNav().render(SplendidMoons.config).el);
 
-    if (typeof MOONS[SplendidMoons.config.year] === 'undefined') {
+    if (typeof DAYS[SplendidMoons.config.year] === 'undefined') {
+      console.log("no data for year: " + SplendidMoons.config.year);
+      this.calendarDoRender();
+      // TODO: load from the admin app url
+      /*
       var that = this;
       $.ajax({
         url: '/data/moons-'+SplendidMoons.config.year+'.json',
         success: function(data) {
-          MOONS[SplendidMoons.config.year] = data;
+          DAYS[SplendidMoons.config.year] = data;
         },
         complete: function() {
           that.calendarDoRender();
         },
         dataType: 'json',
       });
+      */
     } else {
       this.calendarDoRender();
     }
@@ -549,7 +638,7 @@ SplendidMoons.Router = Backbone.Router.extend({
           break;
 
         default:
-          console.log(e.keyCode);
+          //console.log(e.keyCode);
           return;
       }
     } else {
@@ -567,7 +656,7 @@ SplendidMoons.Router = Backbone.Router.extend({
           break;
 
         default:
-          console.log(e.keyCode);
+          //console.log(e.keyCode);
           return;
       }
     }
