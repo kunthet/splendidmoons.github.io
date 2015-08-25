@@ -21,14 +21,18 @@
               %label.modal-close{:for => "modal-3"}
               %h1 Google Calendar
               %p
-                %button.quiet
-                  %span.fa.fa-plus-circle
-                    %a{ :href => "http://www.google.com/calendar/render?cid=http://splendidmoons.github.io/ical/mahanikaya.ical" }
-                      Add to Google Calendar
+                Right click on the link and select Copy Link...
               %p
-                Or copy-paste the direct .ical URL into your calendar application:
                 %a{ :href => "http://splendidmoons.github.io/ical/mahanikaya.ical" }
-                  mahanikaya.ical
+                  http://splendidmoons.github.io/ical/mahanikaya.ical
+              %p
+                Open Google Calendar, and under Other Calendars, open the dropdown menu and select Add By Url:
+                %img{ src: "http://splendidmoons.github.io/images/add-by-url.png", title: "Add By Url" }
+              //%p
+              //  %button.quiet
+              //    %span.fa.fa-plus-circle
+              //      %a{ :href => "http://www.google.com/calendar/render?cid=http://splendidmoons.github.io/ical/mahanikaya.ical" }
+              //        Add to Google Calendar
       <% } %>
   %section#calendar_message
   %section#calendar_nav
