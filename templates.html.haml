@@ -21,13 +21,21 @@
               %label.modal-close{:for => "modal-3"}
               %h1 Google Calendar
               %p
-                Right click on the link and select Copy Link...
+                Right click on the link below and select
+                %strong Copy link address
               %p
                 %a{ :href => "http://splendidmoons.github.io/ical/mahanikaya.ical" }
                   http://splendidmoons.github.io/ical/mahanikaya.ical
               %p
-                Open Google Calendar, and under Other Calendars, open the dropdown menu and select Add By Url:
-                %img{ src: "http://splendidmoons.github.io/images/add-by-url.png", title: "Add By Url" }
+                Open Google Calendar, find
+                = succeed "," do
+                  %strong Other calendars
+                open the dropdown menu and select
+                = succeed "." do
+                  %strong Add by URL
+                Paste the link in the window that appears.
+                %br
+                %img{ src: "http://splendidmoons.github.io/images/add-by-url.png", title: "Add By Url", style: "border: 1px solid #c4c4c4; padding: 5px;" }
               //%p
               //  %button.quiet
               //    %span.fa.fa-plus-circle
