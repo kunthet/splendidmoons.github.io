@@ -20,10 +20,15 @@
             .modal-inner
               %label.modal-close{:for => "modal-3"}
               %h1 Google Calendar
-              %button.quiet
-                %span.fa.fa-plus-circle
-                  %a{ :href => "http://www.google.com/calendar/render?cid=http://splendidmoons.github.io/ical/mahanikaya.ical" }
-                    Add to Google Calendar
+              %p
+                %button.quiet
+                  %span.fa.fa-plus-circle
+                    %a{ :href => "http://www.google.com/calendar/render?cid=http://splendidmoons.github.io/ical/mahanikaya.ical" }
+                      Add to Google Calendar
+              %p
+                Or copy-paste the direct .ical URL into your calendar application:
+                %a{ :href => "http://splendidmoons.github.io/ical/mahanikaya.ical" }
+                  mahanikaya.ical
       <% } %>
   %section#calendar_message
   %section#calendar_nav
