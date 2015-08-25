@@ -1,5 +1,6 @@
 *.swp
 .sass-cache/
+.tern-port
 js/.tern-port
 node_modules/
 npm-debug.log

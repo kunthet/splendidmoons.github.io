@@ -11,7 +11,31 @@
       </li>
       <% } %>
     </ul>
-    <ul class='pull-right menu-icons'></ul>
+    <ul class='pull-right menu-icons'>
+      <% if (showMenu === true) { %>
+      <li class='calendar'>
+        <div class='modal'>
+          <label for='modal-3'>
+            <span class='fa fa-calendar'></span>
+          </label>
+          <input class='modal-state' id='modal-3' type='checkbox'>
+          <div class='modal-window'>
+            <div class='modal-inner'>
+              <label class='modal-close' for='modal-3'></label>
+              <h1>Google Calendar</h1>
+              <button class='quiet'>
+                <span class='fa fa-plus-circle'>
+                  <a href='http://www.google.com/calendar/render?cid=http://splendidmoons.github.io/ical/mahanikaya.ical'>
+                    Add to Google Calendar
+                  </a>
+                </span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </li>
+      <% } %>
+    </ul>
   </nav>
   <section id='calendar_message'></section>
   <section id='calendar_nav'></section>

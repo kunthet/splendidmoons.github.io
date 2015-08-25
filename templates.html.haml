@@ -10,6 +10,21 @@
         %p.site-subtitle uposatha moonday calendar
       <% } %>
     %ul.pull-right.menu-icons
+      <% if (showMenu === true) { %>
+      %li.calendar
+        .modal
+          %label{:for => "modal-3"}
+            %span.fa.fa-calendar
+          %input#modal-3.modal-state{:type => "checkbox"}/
+          .modal-window
+            .modal-inner
+              %label.modal-close{:for => "modal-3"}
+              %h1 Google Calendar
+              %button.quiet
+                %span.fa.fa-plus-circle
+                  %a{ :href => "http://www.google.com/calendar/render?cid=http://splendidmoons.github.io/ical/mahanikaya.ical" }
+                    Add to Google Calendar
+      <% } %>
   %section#calendar_message
   %section#calendar_nav
   %section#calendar_wrap
