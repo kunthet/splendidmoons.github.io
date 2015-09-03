@@ -19,13 +19,15 @@
           .modal-window
             .modal-inner
               %label.modal-close{:for => "modal-3"}
-              %h1 Google Calendar
+              %h1 Add to Google Calendar
               %p
                 Right click on the link below and select
                 %strong Copy link address
               %p
-                %a{ :href => "http://splendidmoons.github.io/ical/mahanikaya.ical" }
-                  http://splendidmoons.github.io/ical/mahanikaya.ical
+                %ul
+                  %li
+                    %a{ :href => "http://splendidmoons.github.io/ical/mahanikaya.ical" }
+                      Uposatha Moondays (Mahānikāya) [.ical]
               %p
                 Open Google Calendar, find
                 = succeed "," do
