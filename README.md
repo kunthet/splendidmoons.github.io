@@ -17,7 +17,7 @@ http://splendidmoons.github.io/
   <body>
     <div id='splendidmoons'></div>
     <!-- load jQuery somewhere on the page -->
-    <script src='/js/vendor/jquery-2.1.4.min.js'></script>
+    <script src='http://code.jquery.com/jquery-2.1.4.min.js'></script>
     <!-- config variables -->
     <script>
       var SplendidMoons = {
@@ -28,7 +28,7 @@ http://splendidmoons.github.io/
       };
     </script>
     <!-- load Splendid Moons -->
-    <script src='/splendidmoons.min.js'></script>
+    <script src='http://splendidmoons.github.io/splendidmoons.min.js'></script>
   </body>
 </html>
 ```
