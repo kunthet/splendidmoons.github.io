@@ -1,4 +1,9 @@
 
+var HTML_HEAD_DATA = '';
+
+// The user might have FontAwesome in their CSS already. Just add info in README.md to load it if not.
+//var HTML_HEAD_DATA = '<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">'
+
 var CSS_DATA = "/* === js template split === */";
 CSS_DATA = Base64.decode(CSS_DATA);
 
@@ -71,6 +76,7 @@ var tpl = {
 
   loadTemplates: function(afterSuccessCallback) {
     var that = this;
+    $('head').append(HTML_HEAD_DATA);
     $('head').append("<style>" + CSS_DATA + "</style>");
     $('body').append(TEMPLATES_DATA);
     $("script[id$='-template']").each(function(){
