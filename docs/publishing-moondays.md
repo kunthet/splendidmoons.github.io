@@ -13,7 +13,7 @@ go run main.go helpers.go structs.go
 ```
 
 In this project's folder, update the years limits in `data/get_days.sh` and
-`data/get_mahanikaya.sh`.
+`ical/get_mahanikaya.sh`.
 
 Pretty print JSON with [jq](https://stedolan.github.io/jq/) to be able to diff
 the old and new data.
